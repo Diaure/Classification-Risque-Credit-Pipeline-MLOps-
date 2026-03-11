@@ -30,7 +30,9 @@ Autrement dit, il faudra:
 
 ## Données
 
-![Comparaison des modèles](ajouter le lien du schema des tables sur github)
+![Comparaison des modèles](https://raw.githubusercontent.com/Diaure/Classification-Risque-Credit-Pipeline-MLOps-/master/Other/comp_modeles.PNG)
+
+https://github.com/Diaure/Classification-Risque-Credit-Pipeline-MLOps-/blob/master/Autres%20images/Schemas_tables.png
 
 Nous avons reçu des données provenant de sources multiples:
 - **Types de données**

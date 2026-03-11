@@ -30,7 +30,12 @@ Autrement dit, il faudra:
 
 ## Données
 
+![Comparaison des modèles](ajouter le lien du schema des tables sur github)
+
 Nous avons reçu des données provenant de sources multiples:
-- Données comportementales
-- Historique de crédits
-- Données d’institutions financières partenaires
+- **Types de données**
+    - Socio‑démographiques
+    - Historiques de crédit
+    - Comportements de paiement
+    - Interactions avec d’autres institutions
+

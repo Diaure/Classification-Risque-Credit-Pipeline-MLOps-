@@ -14,5 +14,3 @@ artefacts/
 *.joblib
 *.pkl
 *.ipynb_checkpoints/
-*.png
-*.jpg

@@ -30,14 +30,16 @@ Autrement dit, il faudra:
 
 ## Données
 
-![Comparaison des modèles](https://raw.githubusercontent.com/Diaure/Classification-Risque-Credit-Pipeline-MLOps-/master/Other/comp_modeles.PNG)
+![Lien entre les tables](https://raw.githubusercontent.com/Diaure/Classification-Risque-Credit-Pipeline-MLOps-/master/Images/Schemas_tables.png)
 
-https://github.com/Diaure/Classification-Risque-Credit-Pipeline-MLOps-/blob/master/Autres%20images/Schemas_tables.png
+![Tables](https://github.com/Diaure/Classification-Risque-Credit-Pipeline-MLOps-/master/Images/Schemas_tables.png)
+
+![Data](https://github.com/Diaure/Classification-Risque-Credit-Pipeline-MLOps-/blob/master/Images/Approche_mlops.png)
 
 Nous avons reçu des données provenant de sources multiples:
-- **Types de données**
-    - Socio‑démographiques
-    - Historiques de crédit
-    - Comportements de paiement
-    - Interactions avec d’autres institutions
+- Socio‑démographiques
+- Historiques de crédit
+- Comportements de paiement
+- Interactions avec d’autres institutions
 
+##

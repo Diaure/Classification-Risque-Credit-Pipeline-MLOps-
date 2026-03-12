@@ -161,6 +161,16 @@ Plusieurs modèles ont été testés allant du plus simple (*régression logisti
 | Seuil optimal | **0.5** |
 | | |
 
+Le modèle permet:
+
+- d’identifier 3319 mauvais payeurs sur 4965
+
+- de réduire les faux négatifs (erreurs les plus coûteuses)
+
+- de maintenir un bon équilibre entre détection du risque et acceptation des bons clients.
+
+![Global](https://raw.githubusercontent.com/Diaure/Classification-Risque-Credit-Pipeline-MLOps-/master/Images/CM_modele_retenu.png)
+
 ## Feature Importance & Explicabilité (**SHAP**)
 
 **Variables les plus influentes**
@@ -180,3 +190,15 @@ Pour chaque client, les valeurs SHAP permettent d’expliquer:
 - Quelles variables influencent le plus la décision
 
 ![Local](https://raw.githubusercontent.com/Diaure/Classification-Risque-Credit-Pipeline-MLOps-/master/Images/SHAP_local.png)
+
+## Prédictions finales
+
+Le modèle final permet:
+
+-d’identifier 3319 mauvais payeurs sur 4965
+
+de réduire les faux négatifs (erreurs les plus coûteuses)
+
+de maintenir un bon équilibre entre détection du risque et acceptation des bons clients
+
+![Prédictions finales](https://raw.githubusercontent.com/Diaure/Classification-Risque-Credit-Pipeline-MLOps-/master/Images/Pred_finales.png)

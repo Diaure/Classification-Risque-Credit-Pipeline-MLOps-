@@ -91,6 +91,92 @@ L’analyse exploratoire a permis d’identifier plusieurs signaux forts sur le 
 - Les nouveaux clients sont plus incertains
 - Les retards successifs sont très discriminants
 
-## Approche MLOps
+## Approche Machine Learning Operations (**MLOps**)
 
-![Lien entre les tables](https://raw.githubusercontent.com/Diaure/Classification-Risque-Credit-Pipeline-MLOps-/master/Images/Approche_mlops.png)
+Le projet suit une démarche MLOps complète :
+
+**1. Tracking des expérimentations (MLflow)**
+- Suivi des hyperparamètres
+- Suivi des métriques (AUC, recall, coût métier)
+- Versioning des modèles
+- Export des artefacts (ROC, CM, SHAP)
+
+**2. Organisation des experiments**
+- Baseline
+- Feature engineering
+- Traitement des outliers
+- Optimisation des hyperparamètres
+- Sélection du meilleur modèle via coût métier
+
+**3. Reproductibilité**
+- Environnement Conda versionné
+- Scripts d’entraînement reproductibles
+- Artefacts exportés dans *artefacts/*
+
+Le projet repose donc sur une approche MLOps qui répond à ce schéma:
+
+![MLOps](https://raw.githubusercontent.com/Diaure/Classification-Risque-Credit-Pipeline-MLOps-/master/Images/Approche_mlops.png)
+
+**Préprocessings initiaux** 
+- un ***modèle de base***, puis 
+- un ***modèle optimisé***, via une recherche d’hyperparamètres (RandomizedSearchCV)
+pour chaque preprocessing constituant une branche indépendante & testée de manière équitable.
+
+Les processings initiaux sont:
+- **Missing Flag**: conserver les valeurs manquantes en les rendant explicites
+- **Imputation**: remplacer les valeurs manquantes par des statistiques adaptées
+- **Drop70**: supprimer les variables trop incomplètes pour réduire le bruit
+
+**Nettoyage des outliers**
+Etape transversale pour mesurer l’impact réel du nettoyage des valeurs aberrantes sur chaque preprocessing.
+
+**Transformation des colonnes**
+- **StandardScaler** sur les variables numériques,
+- **OneHotEncoder** sur les variables catégorielles nominales,
+- **TargetEncoder** sur les variables catégorielles à forte cardinalité.
+
+**Entraînement**
+Chaque pipeline complet est évalué selon trois axes :
+- **Coût métier**: critère principal, basé sur le coût des faux positifs et faux négatifs
+- **Seuil optimal**: déterminé pour minimiser le coût global.
+- **Métriques classiques**: AUC, recall, precision, F1, etc.
+
+Le modèle final est celui qui obtient le **coût métier minimal**, toutes expériences confondues.
+
+## Sélection du meilleur modèle
+
+Plusieurs modèles ont été testés allant du plus simple (*régression logistique*) au plus avancé (*XGBoost*). Le *Dummy* sert de référence, la *régression logistique* est interprétable mais limitée, le *Random Forest* capturent les relations complexes, et *XGBoost* offre le meilleur compromis entre performance et robustesse.
+
+![steps](https://raw.githubusercontent.com/Diaure/Classification-Risque-Credit-Pipeline-MLOps-/master/Images/steps_ops_modeles.png)
+
+**Critère principal: coût métier = ```Coût = 10 x FN + 1 x FP```**
+
+**Modèle retenu: XGBoost optimisé**
+
+| Résultats	| Valeurs	|
+|-----------|-----------|
+| AUC | **0.78** |
+| Recall mauvais payeurs | **67%** |
+| Coût métier minimal | **30 629 €** |
+| Seuil optimal | **0.5** |
+| | |
+
+## Feature Importance & Explicabilité (**SHAP**)
+
+**Variables les plus influentes**
+
+- Scores externes de solvabilité
+- Historique de crédit
+- Retards de paiement
+- Refus antérieurs
+- Ratios de paiement (installments)
+
+![Global](https://raw.githubusercontent.com/Diaure/Classification-Risque-Credit-Pipeline-MLOps-/master/Images/SHAP_global.png)
+
+**Explicabilité locale**
+Pour chaque client, les valeurs SHAP permettent d’expliquer:
+- Pourquoi le score augmente
+- Pourquoi le score diminue
+- Quelles variables influencent le plus la décision
+
+![Local](https://raw.githubusercontent.com/Diaure/Classification-Risque-Credit-Pipeline-MLOps-/master/Images/SHAP_local.png)

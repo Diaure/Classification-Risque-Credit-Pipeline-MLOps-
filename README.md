@@ -169,7 +169,7 @@ Le modèle permet:
 
 - de maintenir un bon équilibre entre détection du risque et acceptation des bons clients.
 
-![Global](https://raw.githubusercontent.com/Diaure/Classification-Risque-Credit-Pipeline-MLOps-/master/Images/CM_modele_retenu.png)
+![CM](https://raw.githubusercontent.com/Diaure/Classification-Risque-Credit-Pipeline-MLOps-/master/Images/CM_modele_retenu.png)
 
 ## Feature Importance & Explicabilité (**SHAP**)
 
@@ -193,12 +193,14 @@ Pour chaque client, les valeurs SHAP permettent d’expliquer:
 
 ## Prédictions finales
 
-Le modèle final permet:
+Le modèle retenu (*XGBoost optimisé*) a été appliqué à un jeu de données inédit, non utilisé lors de l’entraînement.
 
--d’identifier 3319 mauvais payeurs sur 4965
-
-de réduire les faux négatifs (erreurs les plus coûteuses)
-
-de maintenir un bon équilibre entre détection du risque et acceptation des bons clients
+L’objectif est d’évaluer son comportement en conditions réelles et de produire une décision de crédit automatisée.
 
 ![Prédictions finales](https://raw.githubusercontent.com/Diaure/Classification-Risque-Credit-Pipeline-MLOps-/master/Images/Pred_finales.png)
+
+Cette forte proportion de refus est cohérente avec:
+
+- le seuil optimal choisi pour maximiser le rappel des mauvais payeurs,
+- la distribution naturellement risquée du dataset,
+- la stratégie volontairement conservatrice du modèle (réduire les FN).

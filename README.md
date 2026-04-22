@@ -149,7 +149,7 @@ Plusieurs modèles ont été testés allant du plus simple (*régression logisti
 
 ![steps](https://raw.githubusercontent.com/Diaure/Classification-Risque-Credit-Pipeline-MLOps-/master/Images/steps_ops_modeles.png)
 
-**Critère principal: coût métier = ```Coût = 10 x FN + 1 x FP```**
+**Critère principal: coût métier = ```10 x FN + 1 x FP```**
 
 **Modèle retenu: XGBoost optimisé**
 

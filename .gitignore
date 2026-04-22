@@ -4,13 +4,11 @@ data/
 mlruns/
 mlflow.db
 __pycache__/
-*.joblib
 *.pkl
 *.onnx
 *.h5
 **/artifacts/
 artifacts/
 artefacts/
-*.joblib
 *.pkl
 *.ipynb_checkpoints/

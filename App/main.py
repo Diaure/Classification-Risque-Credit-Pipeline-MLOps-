@@ -11,6 +11,17 @@ pipe = joblib.load("./BestModel/pipeline_complet.joblib")
 # Charger le seuil optimal
 threshold = joblib.load("./BestModel/best_threshold.joblib")
 
+# Validation métier
+df = joblib.load("./data/app_test_clean_v2.joblib")
+if "DAYS_BIRTH" in df.columns:
+    if df["DAYS_BIRTH"].iloc[0] > -18*365 or df["DAYS_BIRTH"].iloc[0] >= 0:
+        raise HTTPException(status_code=422, detail="Âge invalide pour un dossier crédit.")
+
+if "AMT_INCOME_TOTAL" in df.columns:
+    if df["AMT_INCOME_TOTAL"].iloc[0] <= 0:
+        raise HTTPException(status_code=422, detail="Revenu invalide pour un dossier crédit.")
+
+
 @app.post("/predict")
 def predict(data: ClientFeatures):
 

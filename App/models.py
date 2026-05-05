@@ -3,10 +3,14 @@ import pandas as pd
 import joblib
 from pydantic import BaseModel, create_model
 from typing import Optional
+import numpy as np
 
 # Charger le dataset brut (328 colonnes)
 df = joblib.load("./data/app_test_clean_v2.joblib")
 example = df.sample(1).iloc[0].to_dict()
+for k, v in example.items():
+    if isinstance(v, float) and (np.isnan(v)):
+        example[k] = None
 
 fields = {}
 

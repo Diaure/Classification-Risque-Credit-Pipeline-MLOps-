@@ -12,7 +12,5 @@ for k, v in example.items():
     if isinstance(v, float) and (np.isnan(v)):
         example[k] = None
 
-
-
 # Afficher sous format JSON
 print(json.dumps(example, indent=4))

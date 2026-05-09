@@ -1,4 +1,3 @@
-# models.py
 import pandas as pd
 import joblib
 from pydantic import BaseModel, create_model

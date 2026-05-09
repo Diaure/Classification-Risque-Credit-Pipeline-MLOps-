@@ -3,9 +3,25 @@ import pandas as pd
 import json
 import joblib
 import numpy as np
+import re
 from typing import Optional
 
 df = joblib.load("./data/app_test_clean_v2.joblib")
+
+def sanitize(name: str) -> str:
+    """
+    Transforme un nom de colonne en identifiant Python valide.
+    """
+    # Remplacer tout caractère non alphanumérique par un underscore
+    name = re.sub(r'[^0-9a-zA-Z_]', '_', name)
+
+    # Si le nom commence par un chiffre → préfixer
+    if re.match(r'^[0-9]', name):
+        name = f"col_{name}"
+
+    return name
+
+df.columns = [sanitize(c) for c in df.columns]
 
 # Prendre un individu au hasard
 example = df.sample(1).iloc[0].to_dict()

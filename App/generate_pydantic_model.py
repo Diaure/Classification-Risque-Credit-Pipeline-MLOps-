@@ -17,6 +17,8 @@ def sanitize(name: str) -> str:
 
     return name
 
+df.columns = [sanitize(c) for c in df.columns]
+
 
 example = df.sample(1).iloc[0].to_dict()
 for k, v in example.items():

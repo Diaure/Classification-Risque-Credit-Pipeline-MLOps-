@@ -115,24 +115,24 @@ class ClientFeatures(BaseModel):
     BUREAU_CREDIT_CURRENCY_NUNIQUE: Optional[float] = None
     BUREAU_CREDIT_TYPE_NUNIQUE: Optional[float] = None
     BUREAU_STATUS_NUNIQUE: Optional[float] = None
-    BUREAU_CREDIT_ACTIVE_Bad debt: Optional[float] = None
+    BUREAU_CREDIT_ACTIVE_Bad_debt: Optional[float] = None
     BUREAU_CREDIT_ACTIVE_Sold: Optional[float] = None
-    BUREAU_CREDIT_CURRENCY_currency 2: Optional[float] = None
-    BUREAU_CREDIT_CURRENCY_currency 3: Optional[float] = None
-    BUREAU_CREDIT_CURRENCY_currency 4: Optional[float] = None
-    BUREAU_CREDIT_TYPE_Another type of loan: Optional[float] = None
-    BUREAU_CREDIT_TYPE_Car loan: Optional[float] = None
-    BUREAU_CREDIT_TYPE_Cash loan (non-earmarked): Optional[float] = None
-    BUREAU_CREDIT_TYPE_Interbank credit: Optional[bool] = None
-    BUREAU_CREDIT_TYPE_Loan for business development: Optional[float] = None
-    BUREAU_CREDIT_TYPE_Loan for purchase of shares (margin lending): Optional[bool] = None
-    BUREAU_CREDIT_TYPE_Loan for the purchase of equipment: Optional[float] = None
-    BUREAU_CREDIT_TYPE_Loan for working capital replenishment: Optional[float] = None
+    BUREAU_CREDIT_CURRENCY_currency_2: Optional[float] = None
+    BUREAU_CREDIT_CURRENCY_currency_3: Optional[float] = None
+    BUREAU_CREDIT_CURRENCY_currency_4: Optional[float] = None
+    BUREAU_CREDIT_TYPE_Another_type_of_loan: Optional[float] = None
+    BUREAU_CREDIT_TYPE_Car_loan: Optional[float] = None
+    BUREAU_CREDIT_TYPE_Cash_loan__non_earmarked_: Optional[float] = None
+    BUREAU_CREDIT_TYPE_Interbank_credit: Optional[bool] = None
+    BUREAU_CREDIT_TYPE_Loan_for_business_development: Optional[float] = None
+    BUREAU_CREDIT_TYPE_Loan_for_purchase_of_shares__margin_lending_: Optional[bool] = None
+    BUREAU_CREDIT_TYPE_Loan_for_the_purchase_of_equipment: Optional[float] = None
+    BUREAU_CREDIT_TYPE_Loan_for_working_capital_replenishment: Optional[float] = None
     BUREAU_CREDIT_TYPE_Microloan: Optional[float] = None
-    BUREAU_CREDIT_TYPE_Mobile operator loan: Optional[bool] = None
+    BUREAU_CREDIT_TYPE_Mobile_operator_loan: Optional[bool] = None
     BUREAU_CREDIT_TYPE_Mortgage: Optional[float] = None
-    BUREAU_CREDIT_TYPE_Real estate loan: Optional[float] = None
-    BUREAU_CREDIT_TYPE_Unknown type of loan: Optional[float] = None
+    BUREAU_CREDIT_TYPE_Real_estate_loan: Optional[float] = None
+    BUREAU_CREDIT_TYPE_Unknown_type_of_loan: Optional[float] = None
     BUREAU_STATUS_1: Optional[float] = None
     BUREAU_STATUS_2: Optional[float] = None
     BUREAU_STATUS_4: Optional[float] = None
@@ -175,33 +175,33 @@ class ClientFeatures(BaseModel):
     PREV_WEEKDAY_APPR_PROCESS_START_TUESDAY: Optional[float] = None
     PREV_WEEKDAY_APPR_PROCESS_START_WEDNESDAY: Optional[float] = None
     PREV_FLAG_LAST_APPL_PER_CONTRACT_N: Optional[float] = None
-    PREV_NAME_CASH_LOAN_PURPOSE_Building a house or an annex: Optional[float] = None
-    PREV_NAME_CASH_LOAN_PURPOSE_Business development: Optional[float] = None
-    PREV_NAME_CASH_LOAN_PURPOSE_Buying a garage: Optional[float] = None
-    PREV_NAME_CASH_LOAN_PURPOSE_Buying a holiday home / land: Optional[float] = None
-    PREV_NAME_CASH_LOAN_PURPOSE_Buying a home: Optional[float] = None
-    PREV_NAME_CASH_LOAN_PURPOSE_Buying a new car: Optional[float] = None
-    PREV_NAME_CASH_LOAN_PURPOSE_Buying a used car: Optional[float] = None
-    PREV_NAME_CASH_LOAN_PURPOSE_Car repairs: Optional[float] = None
+    PREV_NAME_CASH_LOAN_PURPOSE_Building_a_house_or_an_annex: Optional[float] = None
+    PREV_NAME_CASH_LOAN_PURPOSE_Business_development: Optional[float] = None
+    PREV_NAME_CASH_LOAN_PURPOSE_Buying_a_garage: Optional[float] = None
+    PREV_NAME_CASH_LOAN_PURPOSE_Buying_a_holiday_home___land: Optional[float] = None
+    PREV_NAME_CASH_LOAN_PURPOSE_Buying_a_home: Optional[float] = None
+    PREV_NAME_CASH_LOAN_PURPOSE_Buying_a_new_car: Optional[float] = None
+    PREV_NAME_CASH_LOAN_PURPOSE_Buying_a_used_car: Optional[float] = None
+    PREV_NAME_CASH_LOAN_PURPOSE_Car_repairs: Optional[float] = None
     PREV_NAME_CASH_LOAN_PURPOSE_Education: Optional[float] = None
-    PREV_NAME_CASH_LOAN_PURPOSE_Everyday expenses: Optional[float] = None
+    PREV_NAME_CASH_LOAN_PURPOSE_Everyday_expenses: Optional[float] = None
     PREV_NAME_CASH_LOAN_PURPOSE_Furniture: Optional[float] = None
-    PREV_NAME_CASH_LOAN_PURPOSE_Gasification / water supply: Optional[float] = None
+    PREV_NAME_CASH_LOAN_PURPOSE_Gasification___water_supply: Optional[float] = None
     PREV_NAME_CASH_LOAN_PURPOSE_Hobby: Optional[float] = None
     PREV_NAME_CASH_LOAN_PURPOSE_Journey: Optional[float] = None
     PREV_NAME_CASH_LOAN_PURPOSE_Medicine: Optional[float] = None
-    PREV_NAME_CASH_LOAN_PURPOSE_Money for a third person: Optional[bool] = None
+    PREV_NAME_CASH_LOAN_PURPOSE_Money_for_a_third_person: Optional[bool] = None
     PREV_NAME_CASH_LOAN_PURPOSE_Other: Optional[float] = None
-    PREV_NAME_CASH_LOAN_PURPOSE_Payments on other loans: Optional[float] = None
-    PREV_NAME_CASH_LOAN_PURPOSE_Purchase of electronic equipment: Optional[float] = None
-    PREV_NAME_CASH_LOAN_PURPOSE_Refusal to name the goal: Optional[bool] = None
+    PREV_NAME_CASH_LOAN_PURPOSE_Payments_on_other_loans: Optional[float] = None
+    PREV_NAME_CASH_LOAN_PURPOSE_Purchase_of_electronic_equipment: Optional[float] = None
+    PREV_NAME_CASH_LOAN_PURPOSE_Refusal_to_name_the_goal: Optional[bool] = None
     PREV_NAME_CASH_LOAN_PURPOSE_Repairs: Optional[float] = None
-    PREV_NAME_CASH_LOAN_PURPOSE_Urgent needs: Optional[float] = None
-    PREV_NAME_CASH_LOAN_PURPOSE_Wedding / gift / holiday: Optional[float] = None
+    PREV_NAME_CASH_LOAN_PURPOSE_Urgent_needs: Optional[float] = None
+    PREV_NAME_CASH_LOAN_PURPOSE_Wedding___gift___holiday: Optional[float] = None
     PREV_NAME_CONTRACT_STATUS_Refused: Optional[float] = None
-    PREV_NAME_CONTRACT_STATUS_Unused offer: Optional[float] = None
-    PREV_NAME_PAYMENT_TYPE_Cashless from the account of the employer: Optional[float] = None
-    PREV_NAME_PAYMENT_TYPE_Non-cash from your account: Optional[float] = None
+    PREV_NAME_CONTRACT_STATUS_Unused_offer: Optional[float] = None
+    PREV_NAME_PAYMENT_TYPE_Cashless_from_the_account_of_the_employer: Optional[float] = None
+    PREV_NAME_PAYMENT_TYPE_Non_cash_from_your_account: Optional[float] = None
     PREV_CODE_REJECT_REASON_LIMIT: Optional[float] = None
     PREV_CODE_REJECT_REASON_SCO: Optional[float] = None
     PREV_CODE_REJECT_REASON_SCOFR: Optional[float] = None
@@ -210,66 +210,66 @@ class ClientFeatures(BaseModel):
     PREV_CODE_REJECT_REASON_XNA: Optional[float] = None
     PREV_NAME_TYPE_SUITE_Children: Optional[float] = None
     PREV_NAME_TYPE_SUITE_Family: Optional[float] = None
-    PREV_NAME_TYPE_SUITE_Group of people: Optional[float] = None
+    PREV_NAME_TYPE_SUITE_Group_of_people: Optional[float] = None
     PREV_NAME_TYPE_SUITE_Other_A: Optional[float] = None
     PREV_NAME_TYPE_SUITE_Other_B: Optional[float] = None
-    PREV_NAME_TYPE_SUITE_Spouse, partner: Optional[float] = None
+    PREV_NAME_TYPE_SUITE_Spouse__partner: Optional[float] = None
     PREV_NAME_CLIENT_TYPE_New: Optional[float] = None
     PREV_NAME_CLIENT_TYPE_Refreshed: Optional[float] = None
     PREV_NAME_CLIENT_TYPE_XNA: Optional[float] = None
-    PREV_NAME_GOODS_CATEGORY_Additional Service: Optional[bool] = None
+    PREV_NAME_GOODS_CATEGORY_Additional_Service: Optional[bool] = None
     PREV_NAME_GOODS_CATEGORY_Animals: Optional[bool] = None
-    PREV_NAME_GOODS_CATEGORY_Audio/Video: Optional[float] = None
-    PREV_NAME_GOODS_CATEGORY_Auto Accessories: Optional[float] = None
-    PREV_NAME_GOODS_CATEGORY_Clothing and Accessories: Optional[float] = None
+    PREV_NAME_GOODS_CATEGORY_Audio_Video: Optional[float] = None
+    PREV_NAME_GOODS_CATEGORY_Auto_Accessories: Optional[float] = None
+    PREV_NAME_GOODS_CATEGORY_Clothing_and_Accessories: Optional[float] = None
     PREV_NAME_GOODS_CATEGORY_Computers: Optional[float] = None
-    PREV_NAME_GOODS_CATEGORY_Consumer Electronics: Optional[float] = None
-    PREV_NAME_GOODS_CATEGORY_Direct Sales: Optional[float] = None
+    PREV_NAME_GOODS_CATEGORY_Consumer_Electronics: Optional[float] = None
+    PREV_NAME_GOODS_CATEGORY_Direct_Sales: Optional[float] = None
     PREV_NAME_GOODS_CATEGORY_Education: Optional[float] = None
     PREV_NAME_GOODS_CATEGORY_Fitness: Optional[float] = None
     PREV_NAME_GOODS_CATEGORY_Gardening: Optional[float] = None
     PREV_NAME_GOODS_CATEGORY_Homewares: Optional[float] = None
     PREV_NAME_GOODS_CATEGORY_Insurance: Optional[bool] = None
     PREV_NAME_GOODS_CATEGORY_Jewelry: Optional[float] = None
-    PREV_NAME_GOODS_CATEGORY_Medical Supplies: Optional[float] = None
+    PREV_NAME_GOODS_CATEGORY_Medical_Supplies: Optional[float] = None
     PREV_NAME_GOODS_CATEGORY_Medicine: Optional[float] = None
-    PREV_NAME_GOODS_CATEGORY_Office Appliances: Optional[float] = None
+    PREV_NAME_GOODS_CATEGORY_Office_Appliances: Optional[float] = None
     PREV_NAME_GOODS_CATEGORY_Other: Optional[float] = None
-    PREV_NAME_GOODS_CATEGORY_Photo / Cinema Equipment: Optional[float] = None
-    PREV_NAME_GOODS_CATEGORY_Sport and Leisure: Optional[float] = None
+    PREV_NAME_GOODS_CATEGORY_Photo___Cinema_Equipment: Optional[float] = None
+    PREV_NAME_GOODS_CATEGORY_Sport_and_Leisure: Optional[float] = None
     PREV_NAME_GOODS_CATEGORY_Tourism: Optional[float] = None
     PREV_NAME_GOODS_CATEGORY_Vehicles: Optional[float] = None
     PREV_NAME_GOODS_CATEGORY_Weapon: Optional[float] = None
     PREV_NAME_GOODS_CATEGORY_XNA: Optional[float] = None
     PREV_NAME_PORTFOLIO_POS: Optional[float] = None
-    PREV_NAME_PRODUCT_TYPE_walk-in: Optional[float] = None
-    PREV_CHANNEL_TYPE_AP+ (Cash loan): Optional[float] = None
-    PREV_CHANNEL_TYPE_Car dealer: Optional[float] = None
-    PREV_CHANNEL_TYPE_Channel of corporate sales: Optional[float] = None
-    PREV_CHANNEL_TYPE_Contact center: Optional[float] = None
-    PREV_CHANNEL_TYPE_Regional / Local: Optional[float] = None
+    PREV_NAME_PRODUCT_TYPE_walk_in: Optional[float] = None
+    PREV_CHANNEL_TYPE_AP___Cash_loan_: Optional[float] = None
+    PREV_CHANNEL_TYPE_Car_dealer: Optional[float] = None
+    PREV_CHANNEL_TYPE_Channel_of_corporate_sales: Optional[float] = None
+    PREV_CHANNEL_TYPE_Contact_center: Optional[float] = None
+    PREV_CHANNEL_TYPE_Regional___Local: Optional[float] = None
     PREV_CHANNEL_TYPE_Stone: Optional[float] = None
-    PREV_NAME_SELLER_INDUSTRY_Auto technology: Optional[float] = None
+    PREV_NAME_SELLER_INDUSTRY_Auto_technology: Optional[float] = None
     PREV_NAME_SELLER_INDUSTRY_Connectivity: Optional[float] = None
     PREV_NAME_SELLER_INDUSTRY_Construction: Optional[float] = None
     PREV_NAME_SELLER_INDUSTRY_Industry: Optional[float] = None
     PREV_NAME_SELLER_INDUSTRY_Jewelry: Optional[float] = None
-    PREV_NAME_SELLER_INDUSTRY_MLM partners: Optional[float] = None
+    PREV_NAME_SELLER_INDUSTRY_MLM_partners: Optional[float] = None
     PREV_NAME_SELLER_INDUSTRY_Tourism: Optional[float] = None
     PREV_NAME_YIELD_GROUP_XNA: Optional[float] = None
     PREV_NAME_YIELD_GROUP_low_action: Optional[float] = None
     PREV_NAME_YIELD_GROUP_low_normal: Optional[float] = None
-    PREV_PRODUCT_COMBINATION_Card Street: Optional[float] = None
-    PREV_PRODUCT_COMBINATION_Cash Street: high: Optional[float] = None
-    PREV_PRODUCT_COMBINATION_Cash Street: low: Optional[float] = None
-    PREV_PRODUCT_COMBINATION_Cash Street: middle: Optional[float] = None
-    PREV_PRODUCT_COMBINATION_Cash X-Sell: high: Optional[float] = None
-    PREV_PRODUCT_COMBINATION_Cash X-Sell: middle: Optional[float] = None
-    PREV_PRODUCT_COMBINATION_POS industry with interest: Optional[float] = None
-    PREV_PRODUCT_COMBINATION_POS industry without interest: Optional[float] = None
-    PREV_PRODUCT_COMBINATION_POS mobile without interest: Optional[float] = None
-    PREV_PRODUCT_COMBINATION_POS other with interest: Optional[float] = None
-    PREV_PRODUCT_COMBINATION_POS others without interest: Optional[float] = None
+    PREV_PRODUCT_COMBINATION_Card_Street: Optional[float] = None
+    PREV_PRODUCT_COMBINATION_Cash_Street__high: Optional[float] = None
+    PREV_PRODUCT_COMBINATION_Cash_Street__low: Optional[float] = None
+    PREV_PRODUCT_COMBINATION_Cash_Street__middle: Optional[float] = None
+    PREV_PRODUCT_COMBINATION_Cash_X_Sell__high: Optional[float] = None
+    PREV_PRODUCT_COMBINATION_Cash_X_Sell__middle: Optional[float] = None
+    PREV_PRODUCT_COMBINATION_POS_industry_with_interest: Optional[float] = None
+    PREV_PRODUCT_COMBINATION_POS_industry_without_interest: Optional[float] = None
+    PREV_PRODUCT_COMBINATION_POS_mobile_without_interest: Optional[float] = None
+    PREV_PRODUCT_COMBINATION_POS_other_with_interest: Optional[float] = None
+    PREV_PRODUCT_COMBINATION_POS_others_without_interest: Optional[float] = None
     INST_PAY_NUM_INSTALMENT_VERSION_mean: Optional[float] = None
     INST_PAY_DAYS_ENTRY_PAYMENT_mean: Optional[float] = None
     INST_PAY_DAYS_ENTRY_PAYMENT_min: Optional[float] = None
@@ -314,7 +314,7 @@ class ClientFeatures(BaseModel):
     CC_NAME_CONTRACT_STATUS_Approved: Optional[bool] = None
     CC_NAME_CONTRACT_STATUS_Completed: Optional[float] = None
     CC_NAME_CONTRACT_STATUS_Refused: Optional[bool] = None
-    CC_NAME_CONTRACT_STATUS_Sent proposal: Optional[bool] = None
+    CC_NAME_CONTRACT_STATUS_Sent_proposal: Optional[bool] = None
     CC_NAME_CONTRACT_STATUS_Signed: Optional[float] = None
     POS_CNT_INSTALMENT_min: Optional[float] = None
     POS_CNT_INSTALMENT_FUTURE_min: Optional[float] = None
@@ -323,344 +323,345 @@ class ClientFeatures(BaseModel):
     POS_SK_DPD_DEF_max: Optional[float] = None
     POS_SK_DPD_DEF_min: Optional[bool] = None
     POS_NAME_CONTRACT_STATUS_NUNIQUE: Optional[float] = None
-    POS_NAME_CONTRACT_STATUS_Amortized debt: Optional[float] = None
+    POS_NAME_CONTRACT_STATUS_Amortized_debt: Optional[float] = None
     POS_NAME_CONTRACT_STATUS_Approved: Optional[float] = None
     POS_NAME_CONTRACT_STATUS_Canceled: Optional[bool] = None
     POS_NAME_CONTRACT_STATUS_Completed: Optional[float] = None
-    POS_NAME_CONTRACT_STATUS_Returned to the store: Optional[float] = None
+    POS_NAME_CONTRACT_STATUS_Returned_to_the_store: Optional[float] = None
     POS_NAME_CONTRACT_STATUS_Signed: Optional[float] = None
     POS_NAME_CONTRACT_STATUS_XNA: Optional[bool] = None
-
 
     # --- Configuration du modèle ---
     model_config = {
         "json_schema_extra": {
             "example": {
-    "SK_ID_CURR": 438651,
-    "NAME_CONTRACT_TYPE": "Cash loans",
-    "CODE_GENDER": "F",
-    "FLAG_OWN_CAR": "N",
-    "FLAG_OWN_REALTY": "Y",
-    "CNT_CHILDREN": 0,
-    "AMT_INCOME_TOTAL": 180000.0,
-    "AMT_GOODS_PRICE": 450000.0,
-    "NAME_TYPE_SUITE": "Unaccompanied",
-    "NAME_INCOME_TYPE": "Working",
-    "NAME_EDUCATION_TYPE": "Secondary / secondary special",
-    "NAME_FAMILY_STATUS": "Single / not married",
-    "NAME_HOUSING_TYPE": "House / apartment",
-    "REGION_POPULATION_RELATIVE": 0.007305,
-    "DAYS_BIRTH": -21927,
-    "DAYS_EMPLOYED": -1498,
-    "DAYS_REGISTRATION": -9037.0,
-    "DAYS_ID_PUBLISH": -4019,
-    "OWN_CAR_AGE": null,
-    "FLAG_MOBIL": true,
-    "FLAG_EMP_PHONE": true,
-    "FLAG_WORK_PHONE": false,
-    "FLAG_CONT_MOBILE": true,
-    "FLAG_PHONE": false,
-    "FLAG_EMAIL": false,
-    "OCCUPATION_TYPE": "Laborers",
-    "REGION_RATING_CLIENT_W_CITY": 3,
-    "WEEKDAY_APPR_PROCESS_START": "FRIDAY",
-    "HOUR_APPR_PROCESS_START": 12,
-    "REG_REGION_NOT_LIVE_REGION": false,
-    "REG_REGION_NOT_WORK_REGION": false,
-    "LIVE_REGION_NOT_WORK_REGION": false,
-    "REG_CITY_NOT_LIVE_CITY": false,
-    "REG_CITY_NOT_WORK_CITY": false,
-    "LIVE_CITY_NOT_WORK_CITY": false,
-    "ORGANIZATION_TYPE": "Services",
-    "EXT_SOURCE_1": 0.2088905681464756,
-    "EXT_SOURCE_2": 0.5922952796456947,
-    "EXT_SOURCE_3": 0.6195277080511546,
-    "BASEMENTAREA_AVG": 0.1474,
-    "ELEVATORS_AVG": 0.24,
-    "ENTRANCES_AVG": 0.2069,
-    "FLOORSMAX_AVG": 0.375,
-    "NONLIVINGAPARTMENTS_AVG": 0.0,
-    "NONLIVINGAREA_AVG": 0.0,
-    "YEARS_BEGINEXPLUATATION_MEDI": 0.9881,
-    "YEARS_BUILD_MEDI": 0.8390000000000001,
-    "COMMONAREA_MEDI": 0.0981,
-    "LANDAREA_MEDI": 0.2119,
-    "FONDKAPREMONT_MODE": "reg oper account",
-    "HOUSETYPE_MODE": "block of flats",
-    "WALLSMATERIAL_MODE": "Panel",
-    "EMERGENCYSTATE_MODE": "No",
-    "OBS_30_CNT_SOCIAL_CIRCLE": 0.0,
-    "DEF_30_CNT_SOCIAL_CIRCLE": 0.0,
-    "DAYS_LAST_PHONE_CHANGE": -1972.0,
-    "FLAG_DOCUMENT_2": false,
-    "FLAG_DOCUMENT_3": true,
-    "FLAG_DOCUMENT_4": false,
-    "FLAG_DOCUMENT_5": false,
-    "FLAG_DOCUMENT_6": false,
-    "FLAG_DOCUMENT_7": false,
-    "FLAG_DOCUMENT_8": false,
-    "FLAG_DOCUMENT_9": false,
-    "FLAG_DOCUMENT_10": false,
-    "FLAG_DOCUMENT_11": false,
-    "FLAG_DOCUMENT_12": false,
-    "FLAG_DOCUMENT_13": false,
-    "FLAG_DOCUMENT_14": false,
-    "FLAG_DOCUMENT_15": false,
-    "FLAG_DOCUMENT_16": false,
-    "FLAG_DOCUMENT_17": false,
-    "FLAG_DOCUMENT_18": false,
-    "FLAG_DOCUMENT_19": false,
-    "FLAG_DOCUMENT_20": false,
-    "FLAG_DOCUMENT_21": false,
-    "AMT_REQ_CREDIT_BUREAU_HOUR": 0.0,
-    "AMT_REQ_CREDIT_BUREAU_DAY": 0.0,
-    "AMT_REQ_CREDIT_BUREAU_WEEK": 0.0,
-    "AMT_REQ_CREDIT_BUREAU_MON": 0.0,
-    "AMT_REQ_CREDIT_BUREAU_QRT": 3.0,
-    "BUREAU_SK_ID_BUREAU_max": 5646157.0,
-    "BUREAU_DAYS_CREDIT_mean": -784.0,
-    "BUREAU_DAYS_CREDIT_max": -784.0,
-    "BUREAU_DAYS_CREDIT_min": -784.0,
-    "BUREAU_CREDIT_DAY_OVERDUE_mean": 0.0,
-    "BUREAU_CREDIT_DAY_OVERDUE_sum": 0.0,
-    "BUREAU_DAYS_CREDIT_ENDDATE_mean": 268.0,
-    "BUREAU_DAYS_CREDIT_ENDDATE_max": 268.0,
-    "BUREAU_DAYS_CREDIT_ENDDATE_min": 268.0,
-    "BUREAU_DAYS_CREDIT_ENDDATE_sum": 6968.0,
-    "BUREAU_DAYS_ENDDATE_FACT_max": null,
-    "BUREAU_DAYS_ENDDATE_FACT_sum": 0.0,
-    "BUREAU_AMT_CREDIT_MAX_OVERDUE_max": null,
-    "BUREAU_CNT_CREDIT_PROLONG_max": 0.0,
-    "BUREAU_CNT_CREDIT_PROLONG_sum": 0.0,
-    "BUREAU_AMT_CREDIT_SUM_mean": 630000.0,
-    "BUREAU_AMT_CREDIT_SUM_min": 630000.0,
-    "BUREAU_AMT_CREDIT_SUM_sum": 16380000.0,
-    "BUREAU_AMT_CREDIT_SUM_DEBT_max": 0.0,
-    "BUREAU_AMT_CREDIT_SUM_DEBT_sum": 0.0,
-    "BUREAU_AMT_CREDIT_SUM_LIMIT_mean": 0.0,
-    "BUREAU_AMT_CREDIT_SUM_LIMIT_sum": 0.0,
-    "BUREAU_AMT_CREDIT_SUM_OVERDUE_max": 0.0,
-    "BUREAU_AMT_CREDIT_SUM_OVERDUE_sum": 0.0,
-    "BUREAU_AMT_ANNUITY_mean": 0.0,
-    "BUREAU_AMT_ANNUITY_min": 0.0,
-    "BUREAU_MONTHS_BALANCE_max": 0.0,
-    "BUREAU_CREDIT_ACTIVE_NUNIQUE": 1.0,
-    "BUREAU_CREDIT_CURRENCY_NUNIQUE": 1.0,
-    "BUREAU_CREDIT_TYPE_NUNIQUE": 1.0,
-    "BUREAU_STATUS_NUNIQUE": 2.0,
-    "BUREAU_CREDIT_ACTIVE_Bad debt": 0.0,
-    "BUREAU_CREDIT_ACTIVE_Sold": 0.0,
-    "BUREAU_CREDIT_CURRENCY_currency 2": 0.0,
-    "BUREAU_CREDIT_CURRENCY_currency 3": 0.0,
-    "BUREAU_CREDIT_CURRENCY_currency 4": 0.0,
-    "BUREAU_CREDIT_TYPE_Another type of loan": 0.0,
-    "BUREAU_CREDIT_TYPE_Car loan": 0.0,
-    "BUREAU_CREDIT_TYPE_Cash loan (non-earmarked)": 0.0,
-    "BUREAU_CREDIT_TYPE_Interbank credit": 0.0,
-    "BUREAU_CREDIT_TYPE_Loan for business development": 0.0,
-    "BUREAU_CREDIT_TYPE_Loan for purchase of shares (margin lending)": 0.0,
-    "BUREAU_CREDIT_TYPE_Loan for the purchase of equipment": 0.0,
-    "BUREAU_CREDIT_TYPE_Loan for working capital replenishment": 0.0,
-    "BUREAU_CREDIT_TYPE_Microloan": 0.0,
-    "BUREAU_CREDIT_TYPE_Mobile operator loan": 0.0,
-    "BUREAU_CREDIT_TYPE_Mortgage": 0.0,
-    "BUREAU_CREDIT_TYPE_Real estate loan": 0.0,
-    "BUREAU_CREDIT_TYPE_Unknown type of loan": 0.0,
-    "BUREAU_STATUS_1": 0.0,
-    "BUREAU_STATUS_2": 0.0,
-    "BUREAU_STATUS_4": 0.0,
-    "BUREAU_STATUS_5": 0.0,
-    "PREV_AMT_ANNUITY_mean": 21119.00625,
-    "PREV_AMT_ANNUITY_min": 3017.925,
-    "PREV_AMT_APPLICATION_min": 20191.5,
-    "PREV_AMT_DOWN_PAYMENT_sum": 2250.0,
-    "PREV_HOUR_APPR_PROCESS_START_mean": 9.625,
-    "PREV_NFLAG_LAST_APPL_IN_DAY_max": 1.0,
-    "PREV_NFLAG_LAST_APPL_IN_DAY_min": 1.0,
-    "PREV_RATE_DOWN_PAYMENT_max": 0.1146411483253588,
-    "PREV_RATE_DOWN_PAYMENT_sum": 0.1146411483253588,
-    "PREV_RATE_INTEREST_PRIMARY_max": null,
-    "PREV_RATE_INTEREST_PRIMARY_sum": 0.0,
-    "PREV_RATE_INTEREST_PRIVILEGED_max": null,
-    "PREV_SELLERPLACE_AREA_sum": 637.0,
-    "PREV_CNT_PAYMENT_max": 36.0,
-    "PREV_CNT_PAYMENT_min": 6.0,
-    "PREV_DAYS_FIRST_DRAWING_mean": 365243.0,
-    "PREV_DAYS_FIRST_DRAWING_max": 365243.0,
-    "PREV_DAYS_FIRST_DRAWING_sum": 1826215.0,
-    "PREV_DAYS_FIRST_DUE_min": -2549.0,
-    "PREV_DAYS_LAST_DUE_mean": -1570.8,
-    "PREV_DAYS_LAST_DUE_min": -2219.0,
-    "PREV_DAYS_TERMINATION_mean": -1566.0,
-    "PREV_NFLAG_INSURED_ON_APPROVAL_sum": 1.0,
-    "PREV_NAME_PAYMENT_TYPE_NUNIQUE": 2.0,
-    "PREV_CODE_REJECT_REASON_NUNIQUE": 2.0,
-    "PREV_NAME_TYPE_SUITE_NUNIQUE": 2.0,
-    "PREV_NAME_CLIENT_TYPE_NUNIQUE": 2.0,
-    "PREV_NAME_PRODUCT_TYPE_NUNIQUE": 2.0,
-    "PREV_NAME_SELLER_INDUSTRY_NUNIQUE": 3.0,
-    "PREV_NAME_CONTRACT_TYPE_XNA": 0.0,
-    "PREV_WEEKDAY_APPR_PROCESS_START_FRIDAY": 0.0,
-    "PREV_WEEKDAY_APPR_PROCESS_START_MONDAY": 0.0,
-    "PREV_WEEKDAY_APPR_PROCESS_START_SATURDAY": 0.0,
-    "PREV_WEEKDAY_APPR_PROCESS_START_SUNDAY": 1.0,
-    "PREV_WEEKDAY_APPR_PROCESS_START_THURSDAY": 4.0,
-    "PREV_WEEKDAY_APPR_PROCESS_START_TUESDAY": 3.0,
-    "PREV_WEEKDAY_APPR_PROCESS_START_WEDNESDAY": 0.0,
-    "PREV_FLAG_LAST_APPL_PER_CONTRACT_N": 0.0,
-    "PREV_NAME_CASH_LOAN_PURPOSE_Building a house or an annex": 0.0,
-    "PREV_NAME_CASH_LOAN_PURPOSE_Business development": 0.0,
-    "PREV_NAME_CASH_LOAN_PURPOSE_Buying a garage": 0.0,
-    "PREV_NAME_CASH_LOAN_PURPOSE_Buying a holiday home / land": 0.0,
-    "PREV_NAME_CASH_LOAN_PURPOSE_Buying a home": 0.0,
-    "PREV_NAME_CASH_LOAN_PURPOSE_Buying a new car": 0.0,
-    "PREV_NAME_CASH_LOAN_PURPOSE_Buying a used car": 0.0,
-    "PREV_NAME_CASH_LOAN_PURPOSE_Car repairs": 0.0,
-    "PREV_NAME_CASH_LOAN_PURPOSE_Education": 0.0,
-    "PREV_NAME_CASH_LOAN_PURPOSE_Everyday expenses": 0.0,
-    "PREV_NAME_CASH_LOAN_PURPOSE_Furniture": 0.0,
-    "PREV_NAME_CASH_LOAN_PURPOSE_Gasification / water supply": 0.0,
-    "PREV_NAME_CASH_LOAN_PURPOSE_Hobby": 0.0,
-    "PREV_NAME_CASH_LOAN_PURPOSE_Journey": 0.0,
-    "PREV_NAME_CASH_LOAN_PURPOSE_Medicine": 0.0,
-    "PREV_NAME_CASH_LOAN_PURPOSE_Money for a third person": 0.0,
-    "PREV_NAME_CASH_LOAN_PURPOSE_Other": 0.0,
-    "PREV_NAME_CASH_LOAN_PURPOSE_Payments on other loans": 0.0,
-    "PREV_NAME_CASH_LOAN_PURPOSE_Purchase of electronic equipment": 0.0,
-    "PREV_NAME_CASH_LOAN_PURPOSE_Refusal to name the goal": 0.0,
-    "PREV_NAME_CASH_LOAN_PURPOSE_Repairs": 0.0,
-    "PREV_NAME_CASH_LOAN_PURPOSE_Urgent needs": 0.0,
-    "PREV_NAME_CASH_LOAN_PURPOSE_Wedding / gift / holiday": 0.0,
-    "PREV_NAME_CONTRACT_STATUS_Refused": 2.0,
-    "PREV_NAME_CONTRACT_STATUS_Unused offer": 0.0,
-    "PREV_NAME_PAYMENT_TYPE_Cashless from the account of the employer": 0.0,
-    "PREV_NAME_PAYMENT_TYPE_Non-cash from your account": 0.0,
-    "PREV_CODE_REJECT_REASON_LIMIT": 0.0,
-    "PREV_CODE_REJECT_REASON_SCO": 0.0,
-    "PREV_CODE_REJECT_REASON_SCOFR": 0.0,
-    "PREV_CODE_REJECT_REASON_SYSTEM": 0.0,
-    "PREV_CODE_REJECT_REASON_VERIF": 0.0,
-    "PREV_CODE_REJECT_REASON_XNA": 0.0,
-    "PREV_NAME_TYPE_SUITE_Children": 0.0,
-    "PREV_NAME_TYPE_SUITE_Family": 1.0,
-    "PREV_NAME_TYPE_SUITE_Group of people": 0.0,
-    "PREV_NAME_TYPE_SUITE_Other_A": 0.0,
-    "PREV_NAME_TYPE_SUITE_Other_B": 0.0,
-    "PREV_NAME_TYPE_SUITE_Spouse, partner": 0.0,
-    "PREV_NAME_CLIENT_TYPE_New": 0.0,
-    "PREV_NAME_CLIENT_TYPE_Refreshed": 2.0,
-    "PREV_NAME_CLIENT_TYPE_XNA": 0.0,
-    "PREV_NAME_GOODS_CATEGORY_Additional Service": 0.0,
-    "PREV_NAME_GOODS_CATEGORY_Animals": 0.0,
-    "PREV_NAME_GOODS_CATEGORY_Audio/Video": 1.0,
-    "PREV_NAME_GOODS_CATEGORY_Auto Accessories": 0.0,
-    "PREV_NAME_GOODS_CATEGORY_Clothing and Accessories": 0.0,
-    "PREV_NAME_GOODS_CATEGORY_Computers": 0.0,
-    "PREV_NAME_GOODS_CATEGORY_Consumer Electronics": 0.0,
-    "PREV_NAME_GOODS_CATEGORY_Direct Sales": 0.0,
-    "PREV_NAME_GOODS_CATEGORY_Education": 0.0,
-    "PREV_NAME_GOODS_CATEGORY_Fitness": 0.0,
-    "PREV_NAME_GOODS_CATEGORY_Gardening": 0.0,
-    "PREV_NAME_GOODS_CATEGORY_Homewares": 0.0,
-    "PREV_NAME_GOODS_CATEGORY_Insurance": 0.0,
-    "PREV_NAME_GOODS_CATEGORY_Jewelry": 0.0,
-    "PREV_NAME_GOODS_CATEGORY_Medical Supplies": 0.0,
-    "PREV_NAME_GOODS_CATEGORY_Medicine": 0.0,
-    "PREV_NAME_GOODS_CATEGORY_Office Appliances": 0.0,
-    "PREV_NAME_GOODS_CATEGORY_Other": 0.0,
-    "PREV_NAME_GOODS_CATEGORY_Photo / Cinema Equipment": 0.0,
-    "PREV_NAME_GOODS_CATEGORY_Sport and Leisure": 0.0,
-    "PREV_NAME_GOODS_CATEGORY_Tourism": 0.0,
-    "PREV_NAME_GOODS_CATEGORY_Vehicles": 0.0,
-    "PREV_NAME_GOODS_CATEGORY_Weapon": 0.0,
-    "PREV_NAME_GOODS_CATEGORY_XNA": 6.0,
-    "PREV_NAME_PORTFOLIO_POS": 2.0,
-    "PREV_NAME_PRODUCT_TYPE_walk-in": 0.0,
-    "PREV_CHANNEL_TYPE_AP+ (Cash loan)": 0.0,
-    "PREV_CHANNEL_TYPE_Car dealer": 0.0,
-    "PREV_CHANNEL_TYPE_Channel of corporate sales": 0.0,
-    "PREV_CHANNEL_TYPE_Contact center": 3.0,
-    "PREV_CHANNEL_TYPE_Regional / Local": 0.0,
-    "PREV_CHANNEL_TYPE_Stone": 0.0,
-    "PREV_NAME_SELLER_INDUSTRY_Auto technology": 0.0,
-    "PREV_NAME_SELLER_INDUSTRY_Connectivity": 1.0,
-    "PREV_NAME_SELLER_INDUSTRY_Construction": 0.0,
-    "PREV_NAME_SELLER_INDUSTRY_Industry": 0.0,
-    "PREV_NAME_SELLER_INDUSTRY_Jewelry": 0.0,
-    "PREV_NAME_SELLER_INDUSTRY_MLM partners": 0.0,
-    "PREV_NAME_SELLER_INDUSTRY_Tourism": 0.0,
-    "PREV_NAME_YIELD_GROUP_XNA": 0.0,
-    "PREV_NAME_YIELD_GROUP_low_action": 0.0,
-    "PREV_NAME_YIELD_GROUP_low_normal": 3.0,
-    "PREV_PRODUCT_COMBINATION_Card Street": 0.0,
-    "PREV_PRODUCT_COMBINATION_Cash Street: high": 0.0,
-    "PREV_PRODUCT_COMBINATION_Cash Street: low": 0.0,
-    "PREV_PRODUCT_COMBINATION_Cash Street: middle": 2.0,
-    "PREV_PRODUCT_COMBINATION_Cash X-Sell: high": 1.0,
-    "PREV_PRODUCT_COMBINATION_Cash X-Sell: middle": 1.0,
-    "PREV_PRODUCT_COMBINATION_POS industry with interest": 0.0,
-    "PREV_PRODUCT_COMBINATION_POS industry without interest": 0.0,
-    "PREV_PRODUCT_COMBINATION_POS mobile without interest": 0.0,
-    "PREV_PRODUCT_COMBINATION_POS other with interest": 0.0,
-    "PREV_PRODUCT_COMBINATION_POS others without interest": 0.0,
-    "INST_PAY_NUM_INSTALMENT_VERSION_mean": 1.123076923076923,
-    "INST_PAY_DAYS_ENTRY_PAYMENT_mean": -1959.8153846153846,
-    "INST_PAY_DAYS_ENTRY_PAYMENT_min": -2544.0,
-    "INST_PAY_AMT_PAYMENT_mean": 15510.95376923077,
-    "INST_PAY_AMT_PAYMENT_min": 4.5,
-    "INST_PAY_AMT_PAYMENT_sum": 1008211.995,
-    "INST_PAY_PAYMENT_DELAY_mean": -9.307692307692308,
-    "INST_PAY_PAYMENT_DELAY_max": 9.0,
-    "INST_PAY_PAYMENT_DELAY_min": -46.0,
-    "INST_PAY_PAYMENT_DELAY_sum": -605.0,
-    "INST_PAY_PAYMENT_RATIO_mean": 0.7854934814876456,
-    "INST_PAY_PAYMENT_RATIO_min": 0.00018625442354255913,
-    "CC_MONTHS_BALANCE_mean": null,
-    "CC_MONTHS_BALANCE_max": null,
-    "CC_AMT_BALANCE_mean": null,
-    "CC_AMT_CREDIT_LIMIT_ACTUAL_max": null,
-    "CC_AMT_CREDIT_LIMIT_ACTUAL_sum": null,
-    "CC_AMT_DRAWINGS_ATM_CURRENT_mean": null,
-    "CC_AMT_DRAWINGS_ATM_CURRENT_sum": null,
-    "CC_AMT_DRAWINGS_CURRENT_mean": null,
-    "CC_AMT_DRAWINGS_CURRENT_max": null,
-    "CC_AMT_DRAWINGS_CURRENT_min": null,
-    "CC_AMT_DRAWINGS_POS_CURRENT_min": null,
-    "CC_AMT_INST_MIN_REGULARITY_min": null,
-    "CC_AMT_PAYMENT_CURRENT_min": null,
-    "CC_AMT_PAYMENT_TOTAL_CURRENT_max": null,
-    "CC_CNT_DRAWINGS_ATM_CURRENT_mean": null,
-    "CC_CNT_DRAWINGS_ATM_CURRENT_min": null,
-    "CC_CNT_DRAWINGS_ATM_CURRENT_sum": null,
-    "CC_CNT_DRAWINGS_CURRENT_max": null,
-    "CC_CNT_DRAWINGS_CURRENT_min": null,
-    "CC_CNT_DRAWINGS_OTHER_CURRENT_mean": null,
-    "CC_CNT_DRAWINGS_OTHER_CURRENT_min": null,
-    "CC_SK_DPD_max": null,
-    "CC_SK_DPD_DEF_max": null,
-    "CC_UTILIZATION_mean": null,
-    "CC_UTILIZATION_max": null,
-    "CC_UTILIZATION_min": null,
-    "CC_PAYMENT_RATIO_max": null,
-    "CC_PAYMENT_RATIO_min": null,
-    "CC_NAME_CONTRACT_STATUS_NUNIQUE": null,
-    "CC_NAME_CONTRACT_STATUS_Approved": null,
-    "CC_NAME_CONTRACT_STATUS_Completed": null,
-    "CC_NAME_CONTRACT_STATUS_Refused": null,
-    "CC_NAME_CONTRACT_STATUS_Sent proposal": null,
-    "CC_NAME_CONTRACT_STATUS_Signed": null,
-    "POS_CNT_INSTALMENT_min": 2.0,
-    "POS_CNT_INSTALMENT_FUTURE_min": 0.0,
-    "POS_SK_DPD_mean": 0.0,
-    "POS_SK_DPD_min": 0.0,
-    "POS_SK_DPD_DEF_max": 0.0,
-    "POS_SK_DPD_DEF_min": 0.0,
-    "POS_NAME_CONTRACT_STATUS_NUNIQUE": 3.0,
-    "POS_NAME_CONTRACT_STATUS_Amortized debt": 0.0,
-    "POS_NAME_CONTRACT_STATUS_Approved": 0.0,
-    "POS_NAME_CONTRACT_STATUS_Canceled": 0.0,
-    "POS_NAME_CONTRACT_STATUS_Completed": 4.0,
-    "POS_NAME_CONTRACT_STATUS_Returned to the store": 0.0,
-    "POS_NAME_CONTRACT_STATUS_Signed": 2.0,
-    "POS_NAME_CONTRACT_STATUS_XNA": 0.0
-            }}}
+                "SK_ID_CURR": 147408,
+                "NAME_CONTRACT_TYPE": "Cash loans",
+                "CODE_GENDER": "F",
+                "FLAG_OWN_CAR": "Y",
+                "FLAG_OWN_REALTY": "Y",
+                "CNT_CHILDREN": 1,
+                "AMT_INCOME_TOTAL": 90000.0,
+                "AMT_GOODS_PRICE": 495000.0,
+                "NAME_TYPE_SUITE": "Unaccompanied",
+                "NAME_INCOME_TYPE": "Commercial associate",
+                "NAME_EDUCATION_TYPE": "Secondary / secondary special",
+                "NAME_FAMILY_STATUS": "Married",
+                "NAME_HOUSING_TYPE": "House / apartment",
+                "REGION_POPULATION_RELATIVE": 0.018209,
+                "DAYS_BIRTH": -10861,
+                "DAYS_EMPLOYED": -1170,
+                "DAYS_REGISTRATION": -914.0,
+                "DAYS_ID_PUBLISH": -3525,
+                "OWN_CAR_AGE": 16.0,
+                "FLAG_MOBIL": true,
+                "FLAG_EMP_PHONE": true,
+                "FLAG_WORK_PHONE": false,
+                "FLAG_CONT_MOBILE": true,
+                "FLAG_PHONE": false,
+                "FLAG_EMAIL": true,
+                "OCCUPATION_TYPE": "Sales staff",
+                "REGION_RATING_CLIENT_W_CITY": 3,
+                "WEEKDAY_APPR_PROCESS_START": "FRIDAY",
+                "HOUR_APPR_PROCESS_START": 7,
+                "REG_REGION_NOT_LIVE_REGION": false,
+                "REG_REGION_NOT_WORK_REGION": false,
+                "LIVE_REGION_NOT_WORK_REGION": false,
+                "REG_CITY_NOT_LIVE_CITY": false,
+                "REG_CITY_NOT_WORK_CITY": false,
+                "LIVE_CITY_NOT_WORK_CITY": false,
+                "ORGANIZATION_TYPE": "Business Entity Type 3",
+                "EXT_SOURCE_1": 0.1830722994597924,
+                "EXT_SOURCE_2": 0.4831101378256758,
+                "EXT_SOURCE_3": null,
+                "BASEMENTAREA_AVG": 0.0453,
+                "ELEVATORS_AVG": 0.08,
+                "ENTRANCES_AVG": 0.069,
+                "FLOORSMAX_AVG": 0.3333,
+                "NONLIVINGAPARTMENTS_AVG": 0.0019,
+                "NONLIVINGAREA_AVG": 0.0094,
+                "YEARS_BEGINEXPLUATATION_MEDI": 0.9846,
+                "YEARS_BUILD_MEDI": 0.792,
+                "COMMONAREA_MEDI": 0.0036,
+                "LANDAREA_MEDI": 0.0855,
+                "FONDKAPREMONT_MODE": "reg oper account",
+                "HOUSETYPE_MODE": "block of flats",
+                "WALLSMATERIAL_MODE": "Panel",
+                "EMERGENCYSTATE_MODE": "No",
+                "OBS_30_CNT_SOCIAL_CIRCLE": 1.0,
+                "DEF_30_CNT_SOCIAL_CIRCLE": 0.0,
+                "DAYS_LAST_PHONE_CHANGE": -635.0,
+                "FLAG_DOCUMENT_2": false,
+                "FLAG_DOCUMENT_3": true,
+                "FLAG_DOCUMENT_4": false,
+                "FLAG_DOCUMENT_5": false,
+                "FLAG_DOCUMENT_6": false,
+                "FLAG_DOCUMENT_7": false,
+                "FLAG_DOCUMENT_8": false,
+                "FLAG_DOCUMENT_9": false,
+                "FLAG_DOCUMENT_10": false,
+                "FLAG_DOCUMENT_11": false,
+                "FLAG_DOCUMENT_12": false,
+                "FLAG_DOCUMENT_13": false,
+                "FLAG_DOCUMENT_14": false,
+                "FLAG_DOCUMENT_15": false,
+                "FLAG_DOCUMENT_16": false,
+                "FLAG_DOCUMENT_17": false,
+                "FLAG_DOCUMENT_18": false,
+                "FLAG_DOCUMENT_19": false,
+                "FLAG_DOCUMENT_20": false,
+                "FLAG_DOCUMENT_21": false,
+                "AMT_REQ_CREDIT_BUREAU_HOUR": 0.0,
+                "AMT_REQ_CREDIT_BUREAU_DAY": 0.0,
+                "AMT_REQ_CREDIT_BUREAU_WEEK": 0.0,
+                "AMT_REQ_CREDIT_BUREAU_MON": 0.0,
+                "AMT_REQ_CREDIT_BUREAU_QRT": 1.0,
+                "BUREAU_SK_ID_BUREAU_max": 6024917.0,
+                "BUREAU_DAYS_CREDIT_mean": -1331.0,
+                "BUREAU_DAYS_CREDIT_max": -1331.0,
+                "BUREAU_DAYS_CREDIT_min": -1331.0,
+                "BUREAU_CREDIT_DAY_OVERDUE_mean": 0.0,
+                "BUREAU_CREDIT_DAY_OVERDUE_sum": 0.0,
+                "BUREAU_DAYS_CREDIT_ENDDATE_mean": -1118.0,
+                "BUREAU_DAYS_CREDIT_ENDDATE_max": -1118.0,
+                "BUREAU_DAYS_CREDIT_ENDDATE_min": -1118.0,
+                "BUREAU_DAYS_CREDIT_ENDDATE_sum": -49192.0,
+                "BUREAU_DAYS_ENDDATE_FACT_max": -1299.0,
+                "BUREAU_DAYS_ENDDATE_FACT_sum": -57156.0,
+                "BUREAU_AMT_CREDIT_MAX_OVERDUE_max": null,
+                "BUREAU_CNT_CREDIT_PROLONG_max": 0.0,
+                "BUREAU_CNT_CREDIT_PROLONG_sum": 0.0,
+                "BUREAU_AMT_CREDIT_SUM_mean": 26600.4,
+                "BUREAU_AMT_CREDIT_SUM_min": 26600.4,
+                "BUREAU_AMT_CREDIT_SUM_sum": 1170417.6,
+                "BUREAU_AMT_CREDIT_SUM_DEBT_max": 0.0,
+                "BUREAU_AMT_CREDIT_SUM_DEBT_sum": 0.0,
+                "BUREAU_AMT_CREDIT_SUM_LIMIT_mean": null,
+                "BUREAU_AMT_CREDIT_SUM_LIMIT_sum": 0.0,
+                "BUREAU_AMT_CREDIT_SUM_OVERDUE_max": 0.0,
+                "BUREAU_AMT_CREDIT_SUM_OVERDUE_sum": 0.0,
+                "BUREAU_AMT_ANNUITY_mean": null,
+                "BUREAU_AMT_ANNUITY_min": null,
+                "BUREAU_MONTHS_BALANCE_max": 0.0,
+                "BUREAU_CREDIT_ACTIVE_NUNIQUE": 1.0,
+                "BUREAU_CREDIT_CURRENCY_NUNIQUE": 1.0,
+                "BUREAU_CREDIT_TYPE_NUNIQUE": 1.0,
+                "BUREAU_STATUS_NUNIQUE": 1.0,
+                "BUREAU_CREDIT_ACTIVE_Bad_debt": 0.0,
+                "BUREAU_CREDIT_ACTIVE_Sold": 0.0,
+                "BUREAU_CREDIT_CURRENCY_currency_2": 0.0,
+                "BUREAU_CREDIT_CURRENCY_currency_3": 0.0,
+                "BUREAU_CREDIT_CURRENCY_currency_4": 0.0,
+                "BUREAU_CREDIT_TYPE_Another_type_of_loan": 0.0,
+                "BUREAU_CREDIT_TYPE_Car_loan": 0.0,
+                "BUREAU_CREDIT_TYPE_Cash_loan__non_earmarked_": 0.0,
+                "BUREAU_CREDIT_TYPE_Interbank_credit": 0.0,
+                "BUREAU_CREDIT_TYPE_Loan_for_business_development": 0.0,
+                "BUREAU_CREDIT_TYPE_Loan_for_purchase_of_shares__margin_lending_": 0.0,
+                "BUREAU_CREDIT_TYPE_Loan_for_the_purchase_of_equipment": 0.0,
+                "BUREAU_CREDIT_TYPE_Loan for_working_capital_replenishment": 0.0,
+                "BUREAU_CREDIT_TYPE_Microloan": 0.0,
+                "BUREAU_CREDIT_TYPE_Mobile_operator_loan": 0.0,
+                "BUREAU_CREDIT_TYPE_Mortgage": 0.0,
+                "BUREAU_CREDIT_TYPE_Real estate_loan": 0.0,
+                "BUREAU_CREDIT_TYPE_Unknown_type_of_loan": 0.0,
+                "BUREAU_STATUS_1": 0.0,
+                "BUREAU_STATUS_2": 0.0,
+                "BUREAU_STATUS_4": 0.0,
+                "BUREAU_STATUS_5": 0.0,
+                "PREV_AMT_ANNUITY_mean": 5677.155,
+                "PREV_AMT_ANNUITY_min": 4512.105,
+                "PREV_AMT_APPLICATION_min": 61182.0,
+                "PREV_AMT_DOWN_PAYMENT_sum": 0.0,
+                "PREV_HOUR_APPR_PROCESS_START_mean": 11.5,
+                "PREV_NFLAG_LAST_APPL_IN_DAY_max": 1.0,
+                "PREV_NFLAG_LAST_APPL_IN_DAY_min": 1.0,
+                "PREV_RATE_DOWN_PAYMENT_max": 0.0,
+                "PREV_RATE_DOWN_PAYMENT_sum": 0.0,
+                "PREV_RATE_INTEREST_PRIMARY_max": null,
+                "PREV_RATE_INTEREST_PRIMARY_sum": 0.0,
+                "PREV_RATE_INTEREST_PRIVILEGED_max": null,
+                "PREV_SELLERPLACE_AREA_sum": 4560.0,
+                "PREV_CNT_PAYMENT_max": 24.0,
+                "PREV_CNT_PAYMENT_min": 20.0,
+                "PREV_DAYS_FIRST_DRAWING_mean": 365243.0,
+                "PREV_DAYS_FIRST_DRAWING_max": 365243.0,
+                "PREV_DAYS_FIRST_DRAWING_sum": 730486.0,
+                "PREV_DAYS_FIRST_DUE_min": -604.0,
+                "PREV_DAYS_LAST_DUE_mean": 182469.5,
+                "PREV_DAYS_LAST_DUE_min": -304.0,
+                "PREV_DAYS_TERMINATION_mean": 182472.0,
+                "PREV_NFLAG_INSURED_ON_APPROVAL_sum": 1.0,
+                "PREV_NAME_PAYMENT_TYPE_NUNIQUE": 1.0,
+                "PREV_CODE_REJECT_REASON_NUNIQUE": 1.0,
+                "PREV_NAME_TYPE_SUITE_NUNIQUE": 1.0,
+                "PREV_NAME_CLIENT_TYPE_NUNIQUE": 2.0,
+                "PREV_NAME_PRODUCT_TYPE_NUNIQUE": 1.0,
+                "PREV_NAME_SELLER_INDUSTRY_NUNIQUE": 2.0,
+                "PREV_NAME_CONTRACT_TYPE_XNA": 0.0,
+                "PREV_WEEKDAY_APPR_PROCESS_START_FRIDAY": 0.0,
+                "PREV_WEEKDAY_APPR_PROCESS_START_MONDAY": 0.0,
+                "PREV_WEEKDAY_APPR_PROCESS_START_SATURDAY": 0.0,
+                "PREV_WEEKDAY_APPR_PROCESS_START_SUNDAY": 1.0,
+                "PREV_WEEKDAY_APPR_PROCESS_START_THURSDAY": 0.0,
+                "PREV_WEEKDAY_APPR_PROCESS_START_TUESDAY": 0.0,
+                "PREV_WEEKDAY_APPR_PROCESS_START_WEDNESDAY": 1.0,
+                "PREV_FLAG_LAST_APPL_PER_CONTRACT_N": 0.0,
+                "PREV_NAME_CASH_LOAN_PURPOSE_Building_a_house_or_an_annex": 0.0,
+                "PREV_NAME_CASH_LOAN_PURPOSE_Business_development": 0.0,
+                "PREV_NAME_CASH_LOAN_PURPOSE_Buying_a_garage": 0.0,
+                "PREV_NAME_CASH_LOAN_PURPOSE_Buying_a_holiday_home___land": 0.0,
+                "PREV_NAME_CASH_LOAN_PURPOSE_Buying_a_home": 0.0,
+                "PREV_NAME_CASH_LOAN_PURPOSE_Buying_a_new_car": 0.0,
+                "PREV_NAME_CASH_LOAN_PURPOSE_Buying_a_used_car": 0.0,
+                "PREV_NAME_CASH_LOAN_PURPOSE_Car_repairs": 0.0,
+                "PREV_NAME_CASH_LOAN_PURPOSE_Education": 0.0,
+                "PREV_NAME_CASH_LOAN_PURPOSE_Everyday_expenses": 0.0,
+                "PREV_NAME_CASH_LOAN_PURPOSE_Furniture": 0.0,
+                "PREV_NAME_CASH_LOAN_PURPOSE_Gasification___water_supply": 0.0,
+                "PREV_NAME_CASH_LOAN_PURPOSE_Hobby": 0.0,
+                "PREV_NAME_CASH_LOAN_PURPOSE_Journey": 0.0,
+                "PREV_NAME_CASH_LOAN_PURPOSE_Medicine": 0.0,
+                "PREV_NAME_CASH_LOAN_PURPOSE_Money_for_a_third_person": 0.0,
+                "PREV_NAME_CASH_LOAN_PURPOSE_Other": 0.0,
+                "PREV_NAME_CASH_LOAN_PURPOSE_Payments_on_other_loans": 0.0,
+                "PREV_NAME_CASH_LOAN_PURPOSE_Purchase_of_electronic_equipment": 0.0,
+                "PREV_NAME_CASH_LOAN_PURPOSE_Refusal_to_name_the_goal": 0.0,
+                "PREV_NAME_CASH_LOAN_PURPOSE_Repairs": 0.0,
+                "PREV_NAME_CASH_LOAN_PURPOSE_Urgent_needs": 0.0,
+                "PREV_NAME_CASH_LOAN_PURPOSE_Wedding___gift___holiday": 0.0,
+                "PREV_NAME_CONTRACT_STATUS_Refused": 0.0,
+                "PREV_NAME_CONTRACT_STATUS_Unused_offer": 0.0,
+                "PREV_NAME_PAYMENT_TYPE_Cashless_from_the_account_of_the_employer": 0.0,
+                "PREV_NAME_PAYMENT_TYPE_Non-cash_from_your_account": 0.0,
+                "PREV_CODE_REJECT_REASON_LIMIT": 0.0,
+                "PREV_CODE_REJECT_REASON_SCO": 0.0,
+                "PREV_CODE_REJECT_REASON_SCOFR": 0.0,
+                "PREV_CODE_REJECT_REASON_SYSTEM": 0.0,
+                "PREV_CODE_REJECT_REASON_VERIF": 0.0,
+                "PREV_CODE_REJECT_REASON_XNA": 0.0,
+                "PREV_NAME_TYPE_SUITE_Children": 0.0,
+                "PREV_NAME_TYPE_SUITE_Family": 1.0,
+                "PREV_NAME_TYPE_SUITE_Group_of_people": 0.0,
+                "PREV_NAME_TYPE_SUITE_Other_A": 0.0,
+                "PREV_NAME_TYPE_SUITE_Other_B": 0.0,
+                "PREV_NAME_TYPE_SUITE_Spouse__partner": 0.0,
+                "PREV_NAME_CLIENT_TYPE_New": 1.0,
+                "PREV_NAME_CLIENT_TYPE_Refreshed": 0.0,
+                "PREV_NAME_CLIENT_TYPE_XNA": 0.0,
+                "PREV_NAME_GOODS_CATEGORY_Additional_Service": 0.0,
+                "PREV_NAME_GOODS_CATEGORY_Animals": 0.0,
+                "PREV_NAME_GOODS_CATEGORY_Audio/Video": 1.0,
+                "PREV_NAME_GOODS_CATEGORY_Auto_Accessories": 1.0,
+                "PREV_NAME_GOODS_CATEGORY_Clothing_and_Accessories": 0.0,
+                "PREV_NAME_GOODS_CATEGORY_Computers": 0.0,
+                "PREV_NAME_GOODS_CATEGORY_Consumer_Electronics": 0.0,
+                "PREV_NAME_GOODS_CATEGORY_Direct_Sales": 0.0,
+                "PREV_NAME_GOODS_CATEGORY_Education": 0.0,
+                "PREV_NAME_GOODS_CATEGORY_Fitness": 0.0,
+                "PREV_NAME_GOODS_CATEGORY_Gardening": 0.0,
+                "PREV_NAME_GOODS_CATEGORY_Homewares": 0.0,
+                "PREV_NAME_GOODS_CATEGORY_Insurance": 0.0,
+                "PREV_NAME_GOODS_CATEGORY_Jewelry": 0.0,
+                "PREV_NAME_GOODS_CATEGORY_Medical_Supplies": 0.0,
+                "PREV_NAME_GOODS_CATEGORY_Medicine": 0.0,
+                "PREV_NAME_GOODS_CATEGORY_Office_Appliances": 0.0,
+                "PREV_NAME_GOODS_CATEGORY_Other": 0.0,
+                "PREV_NAME_GOODS_CATEGORY_Photo___Cinema_Equipment": 0.0,
+                "PREV_NAME_GOODS_CATEGORY_Sport_and_Leisure": 0.0,
+                "PREV_NAME_GOODS_CATEGORY_Tourism": 0.0,
+                "PREV_NAME_GOODS_CATEGORY_Vehicles": 0.0,
+                "PREV_NAME_GOODS_CATEGORY_Weapon": 0.0,
+                "PREV_NAME_GOODS_CATEGORY_XNA": 0.0,
+                "PREV_NAME_PORTFOLIO_POS": 2.0,
+                "PREV_NAME_PRODUCT_TYPE_walk-in": 0.0,
+                "PREV_CHANNEL_TYPE_AP___Cash loan_": 0.0,
+                "PREV_CHANNEL_TYPE_Car_dealer": 0.0,
+                "PREV_CHANNEL_TYPE_Channel_of_corporate_sales": 0.0,
+                "PREV_CHANNEL_TYPE_Contact_center": 0.0,
+                "PREV_CHANNEL_TYPE_Regional___Local": 1.0,
+                "PREV_CHANNEL_TYPE_Stone": 0.0,
+                "PREV_NAME_SELLER_INDUSTRY_Auto_technology": 1.0,
+                "PREV_NAME_SELLER_INDUSTRY_Connectivity": 0.0,
+                "PREV_NAME_SELLER_INDUSTRY_Construction": 0.0,
+                "PREV_NAME_SELLER_INDUSTRY_Industry": 0.0,
+                "PREV_NAME_SELLER_INDUSTRY_Jewelry": 0.0,
+                "PREV_NAME_SELLER_INDUSTRY_MLM_partners": 0.0,
+                "PREV_NAME_SELLER_INDUSTRY_Tourism": 0.0,
+                "PREV_NAME_YIELD_GROUP_XNA": 0.0,
+                "PREV_NAME_YIELD_GROUP_low_action": 0.0,
+                "PREV_NAME_YIELD_GROUP_low_normal": 2.0,
+                "PREV_PRODUCT_COMBINATION_Card_Street": 0.0,
+                "PREV_PRODUCT_COMBINATION_Cash_Street__high": 0.0,
+                "PREV_PRODUCT_COMBINATION_Cash_Street__low": 0.0,
+                "PREV_PRODUCT_COMBINATION_Cash_Street__middle": 0.0,
+                "PREV_PRODUCT_COMBINATION_Cash_X-Sell__high": 0.0,
+                "PREV_PRODUCT_COMBINATION_Cash_X-Sell__middle": 0.0,
+                "PREV_PRODUCT_COMBINATION_POS_industry_with_interest": 0.0,
+                "PREV_PRODUCT_COMBINATION_POS_industry_without_interest": 0.0,
+                "PREV_PRODUCT_COMBINATION_POS_mobile_without_interest": 0.0,
+                "PREV_PRODUCT_COMBINATION_POS_other_with_interest": 1.0,
+                "PREV_PRODUCT_COMBINATION_POS_others_without_interest": 0.0,
+                "INST_PAY_NUM_INSTALMENT_VERSION_mean": 1.0526315789473684,
+                "INST_PAY_DAYS_ENTRY_PAYMENT_mean": -315.10526315789474,
+                "INST_PAY_DAYS_ENTRY_PAYMENT_min": -609.0,
+                "INST_PAY_AMT_PAYMENT_mean": 10002.18789473684,
+                "INST_PAY_AMT_PAYMENT_min": 4512.105,
+                "INST_PAY_AMT_PAYMENT_sum": 190041.56999999998,
+                "INST_PAY_PAYMENT_DELAY_mean": -5.105263157894737,
+                "INST_PAY_PAYMENT_DELAY_max": -1.0,
+                "INST_PAY_PAYMENT_DELAY_min": -19.0,
+                "INST_PAY_PAYMENT_DELAY_sum": -97.0,
+                "INST_PAY_PAYMENT_RATIO_mean": 1.0,
+                "INST_PAY_PAYMENT_RATIO_min": 1.0,
+                "CC_MONTHS_BALANCE_mean": null,
+                "CC_MONTHS_BALANCE_max": null,
+                "CC_AMT_BALANCE_mean": null,
+                "CC_AMT_CREDIT_LIMIT_ACTUAL_max": null,
+                "CC_AMT_CREDIT_LIMIT_ACTUAL_sum": null,
+                "CC_AMT_DRAWINGS_ATM_CURRENT_mean": null,
+                "CC_AMT_DRAWINGS_ATM_CURRENT_sum": null,
+                "CC_AMT_DRAWINGS_CURRENT_mean": null,
+                "CC_AMT_DRAWINGS_CURRENT_max": null,
+                "CC_AMT_DRAWINGS_CURRENT_min": null,
+                "CC_AMT_DRAWINGS_POS_CURRENT_min": null,
+                "CC_AMT_INST_MIN_REGULARITY_min": null,
+                "CC_AMT_PAYMENT_CURRENT_min": null,
+                "CC_AMT_PAYMENT_TOTAL_CURRENT_max": null,
+                "CC_CNT_DRAWINGS_ATM_CURRENT_mean": null,
+                "CC_CNT_DRAWINGS_ATM_CURRENT_min": null,
+                "CC_CNT_DRAWINGS_ATM_CURRENT_sum": null,
+                "CC_CNT_DRAWINGS_CURRENT_max": null,
+                "CC_CNT_DRAWINGS_CURRENT_min": null,
+                "CC_CNT_DRAWINGS_OTHER_CURRENT_mean": null,
+                "CC_CNT_DRAWINGS_OTHER_CURRENT_min": null,
+                "CC_SK_DPD_max": null,
+                "CC_SK_DPD_DEF_max": null,
+                "CC_UTILIZATION_mean": null,
+                "CC_UTILIZATION_max": null,
+                "CC_UTILIZATION_min": null,
+                "CC_PAYMENT_RATIO_max": null,
+                "CC_PAYMENT_RATIO_min": null,
+                "CC_NAME_CONTRACT_STATUS_NUNIQUE": null,
+                "CC_NAME_CONTRACT_STATUS_Approved": null,
+                "CC_NAME_CONTRACT_STATUS_Completed": null,
+                "CC_NAME_CONTRACT_STATUS_Refused": null,
+                "CC_NAME_CONTRACT_STATUS_Sent_proposal": null,
+                "CC_NAME_CONTRACT_STATUS_Signed": null,
+                "POS_CNT_INSTALMENT_min": 11.0,
+                "POS_CNT_INSTALMENT_FUTURE_min": 0.0,
+                "POS_SK_DPD_mean": 0.0,
+                "POS_SK_DPD_min": 0.0,
+                "POS_SK_DPD_DEF_max": 0.0,
+                "POS_SK_DPD_DEF_min": 0.0,
+                "POS_NAME_CONTRACT_STATUS_NUNIQUE": 2.0,
+                "POS_NAME_CONTRACT_STATUS_Amortized_debt": 0.0,
+                "POS_NAME_CONTRACT_STATUS_Approved": 0.0,
+                "POS_NAME_CONTRACT_STATUS_Canceled": 0.0,
+                "POS_NAME_CONTRACT_STATUS_Completed": 1.0,
+                "POS_NAME_CONTRACT_STATUS_Returned_to_the_store": 0.0,
+                "POS_NAME_CONTRACT_STATUS_Signed": 0.0,
+                "POS_NAME_CONTRACT_STATUS_XNA": 0.0
+            }
+        }
+    }

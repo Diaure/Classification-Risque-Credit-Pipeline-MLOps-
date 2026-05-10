@@ -10,4 +10,4 @@ api.upload_folder(
     token=os.environ["HF_TOKEN"],
     commit_message="CD: update from GitHub main",
     ignore_patterns=[".git/*", ".github/*", "tests/*", "__pycache__/*", 
-                     "*.pyc", ".venv/*", "venv/*" ])
+                     "*.pyc", ".venv/*", "venv/*", "BestModel/*" ])

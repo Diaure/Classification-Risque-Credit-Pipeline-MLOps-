@@ -204,3 +204,9 @@ Cette forte proportion de refus est cohérente avec:
 - le seuil optimal choisi pour maximiser le rappel des mauvais payeurs,
 - la distribution naturellement risquée du dataset,
 - la stratégie volontairement conservatrice du modèle (réduire les FN).
+
+## CI/CD et Déploiement
+
+Ce projet met en œuvre une approche CI/CD complète, séparant:
+- l’intégration continue (**CI**): garantir la qualité du code
+- le déploiement continu (**CD**): rendre l’API accessible publiquement

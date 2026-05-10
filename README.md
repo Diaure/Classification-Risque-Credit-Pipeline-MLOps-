@@ -1,3 +1,13 @@
+---
+title: Home Credit API
+emoji: 🚀
+colorFrom: blue
+colorTo: green
+sdk: docker
+pinned: false
+---
+
+
 # Classification Risque Crédit - Pipeline MLOps
 
 ## Contexte

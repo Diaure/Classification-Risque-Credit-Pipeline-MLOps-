@@ -21,38 +21,28 @@ with open("App/column_mapping.json") as f:
 @app.post("/predict")
 def predict(features: ClientFeatures):
 
-    # -----------------------------
-    # 1) VALIDATIONS MÉTIER
-    # -----------------------------
-
+    # Validation métier
     data = features.dict()
 
-    # Exemple : âge négatif
+    # Âge invalide
     if "DAYS_BIRTH" in data and data["DAYS_BIRTH"] is not None:
-        if data["DAYS_BIRTH"] > 0:
+        # Test attend : âge impossible → 422 + "Âge invalide"
+        if data["DAYS_BIRTH"] > 0 or data["DAYS_BIRTH"] > -18*365:
             raise HTTPException(
                 status_code=422,
-                detail="DAYS_BIRTH doit être négatif (nombre de jours avant la naissance)."
-            )
+                detail="Âge invalide")
 
-    # Exemple : revenu incohérent
+    # Revenu invalide
     if "AMT_INCOME_TOTAL" in data and data["AMT_INCOME_TOTAL"] is not None:
         if data["AMT_INCOME_TOTAL"] <= 0:
             raise HTTPException(
                 status_code=422,
-                detail="AMT_INCOME_TOTAL doit être strictement positif."
-            )
+                detail="Revenu invalide")
 
-    # -----------------------------
-    # 2) Conversion en DataFrame
-    # -----------------------------
-
+    # Conversion en DataFrame
     df = pd.DataFrame([data])
 
-    # -----------------------------
-    # 3) Remapping clean -> original
-    # -----------------------------
-
+    # Remapping clean à l'original
     df = df.rename(columns=COLUMN_MAPPING)
 
     # Vérifier que toutes les colonnes attendues par MLflow sont présentes
@@ -60,18 +50,14 @@ def predict(features: ClientFeatures):
     if missing:
         raise HTTPException(
             status_code=422,
-            detail=f"Colonnes manquantes après remapping : {missing}"
-        )
+            detail=f"Colonnes manquantes après remapping : {missing}")
 
-    # -----------------------------
-    # 4) Prédiction MLflow
-    # -----------------------------
-
+    # Prédiction MLflow
     score = pipe.predict_proba(df)[0][1]
     decision = "ACCORDÉ" if score < threshold else "REFUSÉ"
 
     return {
-        "Score": float(score),
-        "Décision": decision,
-        "Seuil Optimal": float(threshold)
+        "score": float(score),
+        "decision": decision,
+        "threshold": float(threshold)
     }

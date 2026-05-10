@@ -54,3 +54,10 @@ with open("App/models.py", "w") as f:
     f.write(model_code)
 
 print("✔️ Modèle Pydantic généré dans App/models.py")
+
+mapping = {sanitize(c): c for c in joblib.load("./data/app_test_clean_v2.joblib").columns}
+
+import json
+with open("App/column_mapping.json", "w") as f:
+    json.dump(mapping, f, indent=4)
+

@@ -331,7 +331,7 @@ class ClientFeatures(BaseModel):
     POS_NAME_CONTRACT_STATUS_Signed: Optional[float] = None
     POS_NAME_CONTRACT_STATUS_XNA: Optional[bool] = None
 
-# --- Configuration du modèle ---
+    # --- Configuration du modèle ---
     model_config = {
         "json_schema_extra": {
             "example": {
@@ -661,4 +661,6 @@ class ClientFeatures(BaseModel):
                 "POS_NAME_CONTRACT_STATUS_Completed": 1.0,
                 "POS_NAME_CONTRACT_STATUS_Returned_to_the_store": 0.0,
                 "POS_NAME_CONTRACT_STATUS_Signed": 0.0,
-                "POS_NAME_CONTRACT_STATUS_XNA": 0.0}}}
+                "POS_NAME_CONTRACT_STATUS_XNA": 0.0}
+        }
+    }

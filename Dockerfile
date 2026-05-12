@@ -12,7 +12,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY App ./App
 COPY BestModel ./BestModel
 COPY best_threshold.joblib .
-COPY app.py .
+#COPY app.py .
 
 EXPOSE 7860
 

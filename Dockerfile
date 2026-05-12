@@ -1,10 +1,9 @@
-# force rebuild
 FROM python:3.11.9-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-WORKDIR /App
+WORKDIR /code
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
@@ -13,6 +12,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY App ./App
 COPY BestModel ./BestModel
 COPY best_threshold.joblib .
+COPY app.py .
 
 EXPOSE 7860
 

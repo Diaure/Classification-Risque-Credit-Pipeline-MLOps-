@@ -10,6 +10,7 @@ import re
 
 # Charger le pipeline
 pipe = joblib.load("./BestModel/pipeline_complet.joblib")
+print(pipe)
 
 # Charger le seuil optimal
 threshold = joblib.load("./BestModel/best_threshold.joblib")
@@ -30,6 +31,13 @@ def sanitize(name: str) -> str:
 
     return name
 
+def get_expected_cols():
+    pre = pipe.named_steps["preprocess"]
+    num_cols = list(pre.transformers_[0][2])  # le 3e élément du tuple ('num', scaler, [cols])
+    return num_cols
+
+expected_cols = get_expected_cols()
+
 def predict_gradio(*args):
     try:
         # Reconstruction automatique
@@ -40,7 +48,6 @@ def predict_gradio(*args):
         # Conversion robuste : transforme tout ce qui peut être un nombre
         df = df.apply(lambda col: pd.to_numeric(col, errors="coerce"))
 
-        expected_cols = pipe.feature_names_in_
         for col in expected_cols:
             if col not in df.columns:
                 df[col] = None
@@ -65,6 +72,13 @@ def predict_gradio(*args):
             income = df["AMT_INCOME_TOTAL"].iloc[0]
             if pd.notna(income) and income <= 0:
                 return "Revenu invalide", None, None
+
+        print("\n=== DEBUG ===")
+        print("DF columns:", df.columns.tolist())
+        print("EXPECTED:", expected_cols)
+        print("Missing:", set(expected_cols) - set(df.columns))
+        print("Extra:", set(df.columns) - set(expected_cols))
+        print("=== END DEBUG ===\n")
 
         # Prédiction
         score = pipe.predict_proba(df)[0][1]

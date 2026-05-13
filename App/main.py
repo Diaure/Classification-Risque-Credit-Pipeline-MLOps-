@@ -1,5 +1,6 @@
 # 
 from fastapi import FastAPI, HTTPException
+from fastapi.openapi.utils import get_openapi
 import joblib
 import pandas as pd
 import json
@@ -64,3 +65,40 @@ def predict(features: ClientFeatures):
         "decision": decision,
         "threshold": float(threshold)
     }
+
+# Exemple dynamique dans Swagger (/docs)
+# Charger dataset une seule fois
+try:
+    df_example = joblib.load("./data/app_test_clean_v2.joblib")
+except:
+    df_example = None  # sécurité si le fichier n'existe pas dans l'environnement
+
+def generate_random_example():
+    if df_example is None:
+        return {}
+    row = df_example.sample(1).iloc[0].to_dict()
+    # Remplacer NaN par None pour Swagger
+    for k, v in row.items():
+        if isinstance(v, float) and pd.isna(v):
+            row[k] = None
+    return row
+
+def custom_openapi():
+    if app.openapi_schema:
+        return app.openapi_schema
+
+    schema = get_openapi(
+        title="Home Credit API",
+        version="1.0",
+        routes=app.routes,)
+
+    # Injecter l'exemple dynamique dans le schéma OpenAPI
+    try:
+        schema["components"]["schemas"]["ClientFeatures"]["example"] = generate_random_example()
+    except KeyError:
+        pass  # sécurité si le schéma n'est pas encore généré
+
+    app.openapi_schema = schema
+    return schema
+
+app.openapi = custom_openapi

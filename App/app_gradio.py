@@ -3,6 +3,7 @@ import joblib
 import pandas as pd
 from models import ClientFeatures
 import sys, os
+import re
 
 # ROOT = os.path.dirname(os.path.abspath(__file__))
 # sys.path.append(ROOT)
@@ -16,12 +17,25 @@ threshold = joblib.load("./BestModel/best_threshold.joblib")
 # Récupérer l'exemple généré automatiquement dans models.py
 example = ClientFeatures.model_config["json_schema_extra"]["example"]
 
+def sanitize(name: str) -> str:
+    """
+    Transforme un nom de colonne en identifiant Python valide.
+    """
+    # Remplacer tout caractère non alphanumérique par un underscore
+    name = re.sub(r'[^0-9a-zA-Z_]', '_', name)
+
+    # Si le nom commence par un chiffre → préfixer
+    if re.match(r'^[0-9]', name):
+        name = f"col_{name}"
+
+    return name
 
 def predict_gradio(*args):
     try:
         # Reconstruction automatique
         data_dict = {name: value for (name, value) in zip(ClientFeatures.model_fields.keys(), args)}
         df = pd.DataFrame([data_dict])
+        df.columns = [sanitize(c) for c in df.columns]
 
         # Conversion robuste : transforme tout ce qui peut être un nombre
         df = df.apply(lambda col: pd.to_numeric(col, errors="coerce"))

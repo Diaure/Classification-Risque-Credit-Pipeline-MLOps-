@@ -10,7 +10,6 @@ app = FastAPI()
 def root():
     return {"status": "ok"}
 
-
 # Charger le pipeline MLflow (attend les colonnes ORIGINALES)
 pipe = joblib.load("./BestModel/pipeline_complet.joblib")
 

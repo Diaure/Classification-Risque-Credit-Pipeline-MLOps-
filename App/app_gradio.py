@@ -76,6 +76,7 @@ def predict_gradio(*args):
         print("Missing:", set(expected_cols) - set(df.columns))
         print("Extra:", set(df.columns) - set(expected_cols))
         print("=== END DEBUG ===\n")
+        print(df.dtypes)
 
         # Prédiction
         score = pipe.predict_proba(df)[0][1]

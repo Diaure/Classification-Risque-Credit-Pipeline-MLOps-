@@ -31,13 +31,6 @@ def sanitize(name: str) -> str:
 
     return name
 
-def get_expected_cols():
-    pre = pipe.named_steps["preprocess"]
-    num_cols = list(pre.transformers_[0][2])  # le 3e élément du tuple ('num', scaler, [cols])
-    return num_cols
-
-expected_cols = get_expected_cols()
-
 def predict_gradio(*args):
     try:
         # Reconstruction automatique
@@ -47,6 +40,8 @@ def predict_gradio(*args):
 
         # Conversion robuste : transforme tout ce qui peut être un nombre
         # df = df.apply(lambda col: pd.to_numeric(col, errors="coerce"))
+        pre = pipe.named_steps["preprocess"]
+        expected_cols = list(pre.transformers_[0][2])
 
         for col in expected_cols:
             if col not in df.columns:

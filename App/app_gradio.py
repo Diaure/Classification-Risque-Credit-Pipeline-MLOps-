@@ -40,6 +40,12 @@ def predict_gradio(*args):
         # Conversion robuste : transforme tout ce qui peut être un nombre
         df = df.apply(lambda col: pd.to_numeric(col, errors="coerce"))
 
+        expected_cols = pipe.feature_names_in_
+        for col in expected_cols:
+            if col not in df.columns:
+                df[col] = None
+        df = df[expected_cols]
+
         # Validation métier
         if "DAYS_BIRTH" in df.columns:
             raw_age = df["DAYS_BIRTH"].iloc[0]

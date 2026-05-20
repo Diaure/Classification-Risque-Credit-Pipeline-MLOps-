@@ -1,6 +1,6 @@
 Donnees_Brutes/
 *.csv
-data/
+data/*
 mlruns/
 mlflow.db
 __pycache__/

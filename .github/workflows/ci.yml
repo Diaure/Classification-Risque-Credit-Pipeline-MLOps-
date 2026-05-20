@@ -3,10 +3,13 @@ name: CI API Crédit
 on: # quand le pipeline doit s'exécuter, dans le projet:
   push: 
     branches:
-      - develop # le pipeline se lance quand on pousses sur develop
+      - develop 
+      - "feature/**"
+      - master
   pull_request:
     branches:
-      - develop # le pipeline se lance quand une pull request cible develop
+      - develop
+      - master
 
 jobs:
   unit-tests:

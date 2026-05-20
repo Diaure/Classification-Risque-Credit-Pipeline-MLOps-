@@ -21,11 +21,9 @@ def prepare_logs(): # si aucun fichier trouvé renvoyer un message
         return
 
     # Suivi du processus de lecture des lignes du fichier et de séparation des différente logs métier(input, outputs), et opérationnels (latence, temps, etc)
-    print("Lecture du fichier JSONL...")
     rows = load_jsonl(log_file)
     df = pd.DataFrame(rows)
 
-    print("Séparation logs métier / logs opérationnels...")
     # Logs métier contenant "inputs"
     df_model = df[df["inputs"].notna()].copy()
 
@@ -36,26 +34,22 @@ def prepare_logs(): # si aucun fichier trouvé renvoyer un message
     print(f"{len(df_ops)} logs opérationnels")
 
     # Extraction des features (inputs)
-    print("Extraction des features...")
     df_inputs = df_model["inputs"].apply(pd.Series)
 
     # Extraction des outputs
     df_outputs = df_model[["score", "decision", "threshold"]]
 
     # Fusion
-    print("Fusion des données...")
     df_final = pd.concat([df_inputs, df_outputs], axis=1)
 
     # Ajout du timestamp
     df_final["timestamp"] = df_model["timestamp"].values
 
     # Ajout de la latence (join avec df_ops)
-    print("Ajout de la latence...")
     df_ops_small = df_ops[["request_id", "latency_ms"]]
     df_final = df_final.merge(df_ops_small, how="left", left_index=True, right_index=True)
 
     # Sauvegarde en Parquet
-    print("Sauvegarde en Parquet...")
     df_final.to_parquet(output_parquet, index=False)
 
     print(f"Fichier généré : {output_parquet}")

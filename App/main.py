@@ -2,6 +2,7 @@
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse
+from fastapi.exceptions import RequestValidationError
 import joblib
 import pandas as pd
 import json
@@ -11,6 +12,7 @@ import uuid
 import json
 import logging
 from logging.handlers import RotatingFileHandler
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 app = FastAPI()
 @app.get("/")
@@ -31,6 +33,39 @@ handler.setFormatter(formatter) # applique le format definit ci-dessus et écrit
 logger.addHandler(handler) # connecte le logger au fichier sans quoi rien ne sera écrit
 # le format jsonl # json: json est un bloc chargé entièrement en memoire mais difficile pour ajouter de nouvelles données sans reécrire tout le fichier; jsonl (json lines)
 # qui écrit un évènement par ligne sous format json, possibilité d'y ajouter autant de ligne sans modifier les reste et sans recharger tout le fichier
+
+# Logs des erreurs 422
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request, exc):
+    log_entry = {
+        "request_id": str(uuid.uuid4()),
+        "timestamp": time.time(),
+        "path": request.url.path,
+        "method": request.method,
+        "status": "error",
+        "error_message": "ValidationError: " + str(exc.errors()),
+        "latency_ms": None}
+    logger.info(json.dumps(log_entry))
+
+    return JSONResponse(
+        status_code=422,
+        content={"detail": exc.errors()})
+
+@app.exception_handler(StarletteHTTPException)
+async def http_exception_handler(request: Request, exc):
+    log_entry = {
+        "request_id": str(uuid.uuid4()),
+        "timestamp": time.time(),
+        "path": request.url.path,
+        "method": request.method,
+        "status": "error",
+        "error_message": f"HTTPException {exc.status_code}: {exc.detail}",
+        "latency_ms": None}
+    logger.info(json.dumps(log_entry))
+
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"detail": exc.detail})
 
 # Log de chaque requête
 @app.middleware("http")

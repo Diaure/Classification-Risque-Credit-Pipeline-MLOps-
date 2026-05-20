@@ -1,6 +1,6 @@
 import joblib
 
-df_example = joblib.load("data/app_test_small.joblib")
+df_example = joblib.load("./data/app_test_small.joblib")
 pipe = joblib.load("./BestModel/pipeline_complet.joblib")
 
 def test_pipeline_loads():

@@ -1,12 +1,10 @@
 from fastapi.testclient import TestClient
 from App.main import app
-from App.models import ClientFeatures
-
+from tests.utils import TEST_EXAMPLE
 
 def test_out_of_range_values():
     client = TestClient(app)
-
-    example = ClientFeatures.model_config["json_schema_extra"]["example"].copy()
+    example = TEST_EXAMPLE.copy()
 
     # Cas 1 : âge impossible
     example["DAYS_BIRTH"] = -5

@@ -1,15 +1,103 @@
 # 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.openapi.utils import get_openapi
+from fastapi.responses import JSONResponse
+from fastapi.exceptions import RequestValidationError
 import joblib
 import pandas as pd
 import json
 from App.models import ClientFeatures
+import time
+import uuid
+import json
+import logging
+from logging.handlers import RotatingFileHandler
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 app = FastAPI()
 @app.get("/")
 def root():
     return {"status": "ok"}
+
+logger = logging.getLogger("prediction_logger") # objet qui va enregistrer tous les logs d'informations, warning, erreurs mais de debug
+logger.setLevel(logging.INFO) # les informations standard de fonctionnement d'API(latence, statut, inputs, outputs, erreurs, etc) : INFO(niveau normal de fonctionnement)
+
+handler = RotatingFileHandler( # définit l'endroit où écrire tous les logs
+    "logs/predictions_log.jsonl",
+    maxBytes=5_000_000, # lorsque le fichier dépasse 5Mo, 
+    backupCount=3) # renomme le fichier en gardant uniquement les 3 dernières versions; s'il y a un 4ème, le plus ancien est supprimé <> éviter de saturer le disque
+
+# Configurer la manière dont les logs seront écrits
+formatter = logging.Formatter('%(message)s') # les logs écrits doivent être uniquement sous le format "message" <> jsonl sans aucune autre informations supplémentaires
+handler.setFormatter(formatter) # applique le format definit ci-dessus et écrit dans le fichier
+logger.addHandler(handler) # connecte le logger au fichier sans quoi rien ne sera écrit
+# le format jsonl # json: json est un bloc chargé entièrement en memoire mais difficile pour ajouter de nouvelles données sans reécrire tout le fichier; jsonl (json lines)
+# qui écrit un évènement par ligne sous format json, possibilité d'y ajouter autant de ligne sans modifier les reste et sans recharger tout le fichier
+
+# Logs des erreurs 422
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request, exc):
+    log_entry = {
+        "request_id": str(uuid.uuid4()),
+        "timestamp": time.time(),
+        "path": request.url.path,
+        "method": request.method,
+        "status": "error",
+        "error_message": "ValidationError: " + str(exc.errors()),
+        "latency_ms": None}
+    logger.info(json.dumps(log_entry))
+
+    return JSONResponse(
+        status_code=422,
+        content={"detail": exc.errors()})
+
+@app.exception_handler(StarletteHTTPException)
+async def http_exception_handler(request: Request, exc):
+    log_entry = {
+        "request_id": str(uuid.uuid4()),
+        "timestamp": time.time(),
+        "path": request.url.path,
+        "method": request.method,
+        "status": "error",
+        "error_message": f"HTTPException {exc.status_code}: {exc.detail}",
+        "latency_ms": None}
+    logger.info(json.dumps(log_entry))
+
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"detail": exc.detail})
+
+# Log de chaque requête
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    start = time.time() # heure de début pour calculer la latence (delai de réponse entre l'envoi de requete et la réponse retournée)
+    request_id = str(uuid.uuid4()) # généré un id pour chaque requete effectuée
+
+    try:
+        response = await call_next(request) # exécute la requete et si tout fonctionne renvoie "succès"
+        status = "success"
+        error_message = None
+    except Exception as e: # si çà plante, on récupère l'erreur, la loggues, puis renvoie un message à l'utilisateur
+        status = "error"
+        error_message = str(e)
+        response = JSONResponse(
+            status_code=500, # 500 statut code "côté serveur" # 400 "côté client"
+            content={"detail": "Internal server error"})
+
+    latency_ms = (time.time() - start) * 1000 # calcul du temps de traitement en millisecondes (<= 200 <> bon, 200-500 <> acceptable, >= 500 <> bas ou lent)
+
+    log_entry = { # on va enregistrer
+        "request_id": request_id, # l'id de la requete
+        "timestamp": time.time(), # l'heure 
+        "path": request.url.path, # l'endpoint appelé 
+        "method": request.method, # la méthode
+        "status": status, # le statut (succès/erreur)
+        "error_message": error_message, # le message d'erreur
+        "latency_ms": latency_ms,} # la latence
+
+    logger.info(json.dumps(log_entry))
+    return response
+
 
 # Charger le pipeline MLflow (attend les colonnes ORIGINALES)
 pipe = joblib.load("./BestModel/pipeline_complet.joblib")
@@ -60,11 +148,24 @@ def predict(features: ClientFeatures):
     score = pipe.predict_proba(df)[0][1]
     decision = "ACCORDÉ" if score < threshold else "REFUSÉ"
 
-    return {
+    result =  {
         "score": float(score),
         "decision": decision,
-        "threshold": float(threshold)
-    }
+        "threshold": float(threshold)}
+
+    # Log métier
+    log_entry = {
+        "request_id": str(uuid.uuid4()),
+        "timestamp": time.time(),
+        "path": "/predict",
+        "inputs": data,
+        "score": result["score"],
+        "decision": result["decision"],
+        "threshold": result["threshold"]}
+    
+    logger.info(json.dumps(log_entry))
+
+    return result
 
 # Exemple dynamique dans Swagger (/docs)
 # Charger dataset une seule fois

@@ -1,12 +1,9 @@
 import gradio as gr
 import joblib
 import pandas as pd
-from models import ClientFeatures
 import sys, os
 import re
 
-# ROOT = os.path.dirname(os.path.abspath(__file__))
-# sys.path.append(ROOT)
 
 # Charger le pipeline
 pipe = joblib.load("./BestModel/pipeline_complet.joblib")
@@ -15,66 +12,40 @@ print(pipe)
 # Charger le seuil optimal
 threshold = joblib.load("./BestModel/best_threshold.joblib")
 
-# Récupérer l'exemple généré automatiquement dans models.py
-example = ClientFeatures.model_config["json_schema_extra"]["example"]
+# Charger les données
+df_example = joblib.load("./data/app_test_clean_v2.joblib")
 
-def sanitize(name: str) -> str:
-    """
-    Transforme un nom de colonne en identifiant Python valide.
-    """
-    # Remplacer tout caractère non alphanumérique par un underscore
-    name = re.sub(r'[^0-9a-zA-Z_]', '_', name)
+# Récupérer les colonnes attendues par le pipeline
+expected_cols = pipe.feature_names_in_
+print(pipe.feature_names_in_)
 
-    # Si le nom commence par un chiffre → préfixer
-    if re.match(r'^[0-9]', name):
-        name = f"col_{name}"
+example = df_example.sample(1).iloc[0].to_dict()
 
-    return name
-
+# Fonction de prédiction
 def predict_gradio(*args):
     try:
         # Reconstruction automatique
-        data_dict = {name: value for (name, value) in zip(ClientFeatures.model_fields.keys(), args)}
+        data_dict = dict(zip(expected_cols, args)) 
         df = pd.DataFrame([data_dict])
-        df.columns = [sanitize(c) for c in df.columns]
-
-        # Conversion robuste : transforme tout ce qui peut être un nombre
-        # df = df.apply(lambda col: pd.to_numeric(col, errors="coerce"))
-        pre = pipe.named_steps["preprocess"]
-        expected_cols = list(pre.transformers_[0][2])
-
-        for col in expected_cols:
-            if col not in df.columns:
-                df[col] = None
-        
         df = df[expected_cols]
-        df = df.apply(lambda col: pd.to_numeric(col, errors="coerce"))
-
-        # Validation métier
-        if "DAYS_BIRTH" in df.columns:
-            raw_age = df["DAYS_BIRTH"].iloc[0]
-
-            # Forcer la conversion en float de manière robuste
-            try:
-                age = float(raw_age)
-            except (TypeError, ValueError):
-                age = None
-
-            # Si on a bien un nombre, on applique la règle métier
-            if age is not None and (age >= 0 or age > -18 * 365):
-                return "Âge invalide", None, None
-            
-
-        if "AMT_INCOME_TOTAL" in df.columns:
-            income = df["AMT_INCOME_TOTAL"].iloc[0]
-            if pd.notna(income) and income <= 0:
-                return "Revenu invalide", None, None
 
         print("\n=== DEBUG ===")
+        print(df.head())
         print("DF columns:", df.columns.tolist())
-        print("EXPECTED:", expected_cols)
-        print("Missing:", set(expected_cols) - set(df.columns))
-        print("Extra:", set(df.columns) - set(expected_cols))
+
+        if hasattr(pipe, "feature_names_in_"):
+            print(pipe.feature_names_in_)
+
+        if hasattr(pipe.named_steps["preprocess"], "transformers_"):
+            print("\n===== PREPROCESS EXPECTED =====")
+
+            for name, transfo, cols in pipe.named_steps["preprocess"].transformers_:
+                print(f"\nTransformer: {name}")
+                print(cols)
+
+                missing = set(cols) - set(df.columns)
+                print("MISSING:", missing)
+
         print("=== END DEBUG ===\n")
         print(df.dtypes)
 
@@ -88,31 +59,21 @@ def predict_gradio(*args):
         return f"ERREUR : {str(e)}", None, None
 
 
-
 # Génération automatique des inputs Gradio AVEC VALEURS PAR DÉFAUT
 inputs = []
-for name, field in ClientFeatures.model_fields.items():
+for col in expected_cols:
+    val = example[col]
 
-    default_value = example.get(name, None)
-
-    if field.annotation == float:
-        inputs.append(gr.Number(label=name, value=default_value))
-    elif field.annotation == int:
-        inputs.append(gr.Number(label=name, value=default_value))
-    elif field.annotation == bool:
-        inputs.append(gr.Checkbox(label=name, value=default_value))
-    elif field.annotation == str:
-        inputs.append(gr.Textbox(label=name, value=default_value))
+    if isinstance(val, str):
+        inputs.append(gr.Textbox(label=col, value=val))
     else:
-        inputs.append(gr.Textbox(label=name, value=default_value))
-
+        inputs.append(gr.Number(label=col, value=float(val)))
 
 # Sorties Gradio
 outputs = [
     gr.Textbox(label="Décision"),
     gr.Number(label="Score"),
-    gr.Number(label="Seuil Optimal"),
-]
+    gr.Number(label="Seuil Optimal"),]
 
 # Interface Gradio
 app = gr.Interface(
@@ -120,7 +81,6 @@ app = gr.Interface(
     inputs=inputs,
     outputs=outputs,
     title="Scoring Crédit - Interface Gradio",
-    description="Interface interactive pour tester le modèle de scoring crédit."
-)
+    description="Interface interactive pour tester le modèle de scoring crédit.")
 
 app.launch()

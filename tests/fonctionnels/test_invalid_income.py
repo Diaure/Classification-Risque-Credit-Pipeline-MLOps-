@@ -1,10 +1,10 @@
 from fastapi.testclient import TestClient
 from App.main import app
-from App.models import ClientFeatures
+from tests.utils import TEST_EXAMPLE
 
 def test_invalid_income():
     client = TestClient(app)
-    example = ClientFeatures.model_config["json_schema_extra"]["example"].copy()
+    example = TEST_EXAMPLE.copy()
 
     example["AMT_INCOME_TOTAL"] = 0  # revenu impossible
 

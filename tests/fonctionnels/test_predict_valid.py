@@ -1,11 +1,11 @@
 # Vérifier que les prédictions sont valides
 from fastapi.testclient import TestClient
 from App.main import app
-from App.models import ClientFeatures
+from tests.utils import TEST_EXAMPLE
 
 def test_predict_valid():
     client = TestClient(app)
-    example = ClientFeatures.model_config["json_schema_extra"]["example"]
+    example = TEST_EXAMPLE.copy()
 
     response = client.post("/predict", json=example)
     assert response.status_code == 200

@@ -29,7 +29,7 @@ def prepare_logs(): # si aucun fichier trouvé renvoyer un message
 
     # Les autres logs
     df_ops = df[df["inputs"].isna()].copy()
-    #df_ops = df[df["latency_ms"].notna()].copy()
+
     print(f"{len(df_model)} logs modèle")
     print(f"{len(df_ops)} logs opérationnels")
 
@@ -45,13 +45,19 @@ def prepare_logs(): # si aucun fichier trouvé renvoyer un message
     # Ajout du timestamp
     df_final["timestamp"] = df_model["timestamp"].values
 
+    # Ajout du request_id
+    df_final["request_id"] = df_model["request_id"].values
+
     # Ajout de la latence (join avec df_ops)
-    df_ops_small = df_ops[["request_id", "latency_ms"]]
-    df_final = df_final.merge(df_ops_small, how="left", left_index=True, right_index=True)
+    df_ops_clean = df_ops.drop(columns=["inputs"], errors="ignore")
+    # df_ops_small = df_ops[["request_id", "latency_ms"]]
+    # df_final = df_final.merge(df_ops_small, how="left", left_index=True, right_index=True)
 
-    # Sauvegarde en Parquet
+    # Merge complet avec les logs opérationnels
+    # df_ops_full = df_ops.drop(columns=["inputs"], errors="ignore")
+    df_final = df_final.merge(df_ops_clean, how="left", on="request_id")
+    
     df_final.to_parquet(output_parquet, index=False)
-
     print(f"Fichier généré : {output_parquet}")
 
 if __name__ == "__main__":

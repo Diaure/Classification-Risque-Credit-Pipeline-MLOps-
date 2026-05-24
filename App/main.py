@@ -13,6 +13,7 @@ import json
 import logging
 from logging.handlers import RotatingFileHandler
 from starlette.exceptions import HTTPException as StarletteHTTPException
+from fastapi.openapi.utils import get_openapi
 import psutil
 
 app = FastAPI()

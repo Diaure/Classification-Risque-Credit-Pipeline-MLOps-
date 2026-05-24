@@ -1,8 +1,9 @@
 import pandas as pd
 import joblib
 from sklearn import datasets
-from evidently import Report
+from evidently.report import Report
 from evidently.metrics import (DataDriftPreset, TargetDriftPreset, DataQualityPreset)
+
 from pathlib import Path
 
 # Charger les features via le pipeline d'entrainement

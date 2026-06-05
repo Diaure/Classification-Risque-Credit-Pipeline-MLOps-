@@ -177,6 +177,10 @@ def predict(features: ClientFeatures, request: Request):
     # Prédiction MLflow
     score = pipe.predict_proba(df)[0][1]
     decision = "ACCORDÉ" if score < threshold else "REFUSÉ"
+    X_monitoring = pipe[:-1].transform(df)
+    X_monitoring = pd.DataFrame(X_monitoring,columns=pipe[:-1].get_feature_names_out())
+    # df_transformed = pipe[:-1].transform(df)
+    # df_transformed.to_dict()
 
     result =  {
         "score": float(score),
@@ -188,7 +192,7 @@ def predict(features: ClientFeatures, request: Request):
         "request_id": request_id,
         "timestamp": time.time(),
         "path": "/predict",
-        "inputs": data,
+        "inputs": X_monitoring.iloc[0].to_dict(),
         "score": result["score"],
         "decision": result["decision"],
         "threshold": result["threshold"],

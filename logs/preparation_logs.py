@@ -50,11 +50,8 @@ def prepare_logs(): # si aucun fichier trouvé renvoyer un message
 
     # Ajout de la latence (join avec df_ops)
     df_ops_clean = df_ops.drop(columns=["inputs"], errors="ignore")
-    # df_ops_small = df_ops[["request_id", "latency_ms"]]
-    # df_final = df_final.merge(df_ops_small, how="left", left_index=True, right_index=True)
-
+  
     # Merge complet avec les logs opérationnels
-    # df_ops_full = df_ops.drop(columns=["inputs"], errors="ignore")
     df_final = df_final.merge(df_ops_clean, how="left", on="request_id")
     
     df_final.to_parquet(output_parquet, index=False)

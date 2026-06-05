@@ -13,6 +13,8 @@ import json
 import logging
 from logging.handlers import RotatingFileHandler
 from starlette.exceptions import HTTPException as StarletteHTTPException
+from fastapi.openapi.utils import get_openapi
+import psutil
 
 app = FastAPI()
 @app.get("/")
@@ -37,30 +39,44 @@ logger.addHandler(handler) # connecte le logger au fichier sans quoi rien ne ser
 # Logs des erreurs 422
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request, exc):
+    request_id = getattr(request.state, "request_id", str(uuid.uuid4()))
     log_entry = {
-        "request_id": str(uuid.uuid4()),
+        "request_id": request_id,
         "timestamp": time.time(),
         "path": request.url.path,
         "method": request.method,
         "status": "error",
         "error_message": "ValidationError: " + str(exc.errors()),
-        "latency_ms": None}
+        "latency_ms": None,
+        "request_size_bytes": int(request.headers.get("content-length", 0)),
+        "response_size_bytes": None,
+        "cpu_percent": psutil.cpu_percent(),
+        "ram_percent": psutil.virtual_memory().percent,
+        "system_load": psutil.getloadavg()[0],
+        "num_threads": psutil.Process().num_threads()}
     logger.info(json.dumps(log_entry))
 
     return JSONResponse(
-        status_code=422,
+        status_code = 422,
         content={"detail": exc.errors()})
 
 @app.exception_handler(StarletteHTTPException)
 async def http_exception_handler(request: Request, exc):
+    request_id = getattr(request.state, "request_id", str(uuid.uuid4()))
     log_entry = {
-        "request_id": str(uuid.uuid4()),
+        "request_id": request_id,
         "timestamp": time.time(),
         "path": request.url.path,
         "method": request.method,
         "status": "error",
         "error_message": f"HTTPException {exc.status_code}: {exc.detail}",
-        "latency_ms": None}
+        "latency_ms": None,
+        "request_size_bytes": int(request.headers.get("content-length", 0)),
+        "response_size_bytes": None,
+        "cpu_percent": psutil.cpu_percent(),
+        "ram_percent": psutil.virtual_memory().percent,
+        "system_load": psutil.getloadavg()[0],
+        "num_threads": psutil.Process().num_threads()}
     logger.info(json.dumps(log_entry))
 
     return JSONResponse(
@@ -72,6 +88,8 @@ async def http_exception_handler(request: Request, exc):
 async def log_requests(request: Request, call_next):
     start = time.time() # heure de début pour calculer la latence (delai de réponse entre l'envoi de requete et la réponse retournée)
     request_id = str(uuid.uuid4()) # généré un id pour chaque requete effectuée
+    request.state.request_id = request_id
+    request_size = int(request.headers.get("content-length", 0)) # Taille de la requête
 
     try:
         response = await call_next(request) # exécute la requete et si tout fonctionne renvoie "succès"
@@ -86,6 +104,11 @@ async def log_requests(request: Request, call_next):
 
     latency_ms = (time.time() - start) * 1000 # calcul du temps de traitement en millisecondes (<= 200 <> bon, 200-500 <> acceptable, >= 500 <> bas ou lent)
 
+    # Taille de la réponse
+    response_size = 0
+    if hasattr(response, "body"):
+        response_size = len(response.body)
+
     log_entry = { # on va enregistrer
         "request_id": request_id, # l'id de la requete
         "timestamp": time.time(), # l'heure 
@@ -93,7 +116,13 @@ async def log_requests(request: Request, call_next):
         "method": request.method, # la méthode
         "status": status, # le statut (succès/erreur)
         "error_message": error_message, # le message d'erreur
-        "latency_ms": latency_ms,} # la latence
+        "latency_ms": latency_ms,
+        "request_size_bytes": request_size,
+        "response_size_bytes": response_size,
+        "cpu_percent": psutil.cpu_percent(),
+        "ram_percent": psutil.virtual_memory().percent,
+        "system_load": psutil.getloadavg()[0],
+        "num_threads": psutil.Process().num_threads()} # la latence
 
     logger.info(json.dumps(log_entry))
     return response
@@ -111,8 +140,9 @@ with open("App/column_mapping.json") as f:
 
 
 @app.post("/predict")
-def predict(features: ClientFeatures):
-
+def predict(features: ClientFeatures, request: Request):
+    request_id = request.state.request_id
+    
     # Validation métier
     data = features.dict()
 
@@ -147,6 +177,10 @@ def predict(features: ClientFeatures):
     # Prédiction MLflow
     score = pipe.predict_proba(df)[0][1]
     decision = "ACCORDÉ" if score < threshold else "REFUSÉ"
+    X_monitoring = pipe[:-1].transform(df)
+    X_monitoring = pd.DataFrame(X_monitoring,columns=pipe[:-1].get_feature_names_out())
+    # df_transformed = pipe[:-1].transform(df)
+    # df_transformed.to_dict()
 
     result =  {
         "score": float(score),
@@ -155,13 +189,17 @@ def predict(features: ClientFeatures):
 
     # Log métier
     log_entry = {
-        "request_id": str(uuid.uuid4()),
+        "request_id": request_id,
         "timestamp": time.time(),
         "path": "/predict",
-        "inputs": data,
+        "inputs": X_monitoring.iloc[0].to_dict(),
         "score": result["score"],
         "decision": result["decision"],
-        "threshold": result["threshold"]}
+        "threshold": result["threshold"],
+        "cpu_percent": psutil.cpu_percent(),
+        "ram_percent": psutil.virtual_memory().percent,
+        "system_load": psutil.getloadavg()[0],
+        "num_threads": psutil.Process().num_threads()}
     
     logger.info(json.dumps(log_entry))
 

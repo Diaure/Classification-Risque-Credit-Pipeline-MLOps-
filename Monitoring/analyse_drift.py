@@ -163,34 +163,6 @@ print(df_production.columns[:20].tolist())
 
 print(set(df_reference.columns) - set(df_production.columns))
 
-# cols = [
-#     "AMT_INCOME_TOTAL",
-#     "AMT_GOODS_PRICE",
-#     "EXT_SOURCE_1",
-#     "EXT_SOURCE_2",
-#     "EXT_SOURCE_3"
-# ]
-
-# for col in cols:
-#     print(f"\n===== {col} =====")
-#     print("REF")
-#     print(df_reference[col].describe())
-
-#     print("\nPROD")
-#     print(df_production[col].describe())
-
-# for col in cols:
-#     print("\n", col)
-
-#     print(
-#         "REF mean=",
-#         df_reference[col].mean()
-#     )
-
-#     print(
-#         "PROD mean=",
-#         df_production[col].mean()
-#     )
 
 print(df_production.describe().T)
 df_production.nunique().sort_values()
@@ -222,9 +194,8 @@ for col in df_reference.columns:
 report = Report(metrics=metrics)
 report.run(reference_data=df_reference, current_data=df_production,)
 
+report.save_html("Monitoring/drift_report.html")
 report.save_json("Monitoring/drift_report.json")
-
-# print("RUN OK")
 
 print("\nRapport généré : "
       "Monitoring/drift_report.json")

@@ -160,6 +160,8 @@ def predict(features: ClientFeatures, request: Request):
             raise HTTPException(
                 status_code=422,
                 detail="Revenu invalide")
+    
+    infer_start = time.perf_counter()
 
     # Conversion en DataFrame
     df = pd.DataFrame([data])
@@ -177,10 +179,9 @@ def predict(features: ClientFeatures, request: Request):
     # Prédiction MLflow
     score = pipe.predict_proba(df)[0][1]
     decision = "ACCORDÉ" if score < threshold else "REFUSÉ"
+    infer_time_ms = (time.perf_counter() - infer_start) * 1000
     X_monitoring = pipe[:-1].transform(df)
     X_monitoring = pd.DataFrame(X_monitoring,columns=pipe[:-1].get_feature_names_out())
-    # df_transformed = pipe[:-1].transform(df)
-    # df_transformed.to_dict()
 
     result =  {
         "score": float(score),
@@ -191,6 +192,7 @@ def predict(features: ClientFeatures, request: Request):
     log_entry = {
         "request_id": request_id,
         "timestamp": time.time(),
+        "inference_ms": infer_time_ms,
         "path": "/predict",
         "inputs": X_monitoring.iloc[0].to_dict(),
         "score": result["score"],

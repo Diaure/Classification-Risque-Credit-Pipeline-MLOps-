@@ -38,6 +38,9 @@ with open("Monitoring/drift_report.json", "r", encoding="utf-8") as f:
 
 # Charger les logs bruts
 df_logs = pd.read_parquet("logs/predictions_log.parquet")
+df_logs["timestamp"] = pd.to_datetime(df_logs["timestamp_x"], unit="s")
+
+st.write(df_logs.head())
 
 st.title("📊 Monitoring du Drift — Dashboard MLOps")
 
@@ -65,14 +68,15 @@ with tab1:
     # KPI API
     with st.container():
         st.markdown("""<p style='font-size: 22px; font-style: italic;'>Performance API</p>""", unsafe_allow_html=True)
-        c1, c2, c3, c4, c5 = st.columns([1,1,1,1,1])
+        c1, c2, c3, c4, c5, c6 = st.columns([1,1,1,1,1,1])
 
         st.markdown("<br>", unsafe_allow_html=True)
-        c1.metric("Latence moyenne", f"{df_logs['latency_ms'].mean():.1f}%")
-        c2.metric("CPU moyen", f"{df_logs['cpu_percent'].mean():.1f}%")
-        c3.metric("RAM moyenne", f"{df_logs['ram_percent'].mean():.1f}%")
-        c4.metric("Charge système", f"{df_logs['system_load'].mean():.2f}")
-        c5.metric("Threads moyens", f"{df_logs['num_threads'].mean():.0f}")
+        c1.metric("Latence moyenne", f"{df_logs['latency_ms'].mean():.2f}")
+        c2.metric("Temps d'inférence moyen", f"{df_logs['system_load'].mean():.2f}")
+        c3.metric("CPU moyen", f"{df_logs['cpu_percent'].mean():.1f}%")
+        c4.metric("RAM moyenne", f"{df_logs['ram_percent'].mean():.1f}%")
+        c5.metric("Charge système", f"{df_logs['system_load'].mean():.2f}")
+        c6.metric("Threads moyens", f"{df_logs['num_threads'].mean():.0f}")
 
     # KPI Métier
     with st.container():
@@ -80,14 +84,37 @@ with tab1:
         m1, m2, m3 = st.columns([1,1,1])
         
         st.markdown("<br>", unsafe_allow_html=True)
-        m1.metric("Score moyen", f"{df_logs['score_x'].mean():.3f}")
+        m1.metric("Probalité moyenne", f"{df_logs['score_x'].mean():.2f}")
         m2.metric("Seuil optimal moyen", f"{df_logs['threshold_x'].mean():.3f}")
         m3.metric("Décision majoritaire", df_logs["decision_x"].mode()[0])
 
-    # Graphique distribution décisions
-    decision_df = (df_logs["decision_x"].value_counts().reset_index())
-    fig = px.bar(decision_df, x = "decision_x", y = "count", title = "Répartition des décisions")
-    st.plotly_chart(fig, use_container_width = True)
+    with st.container():
+        g1, g2 = st.columns([1,1])
+        
+        # Graphique distribution des scores
+        score_df = (df_logs["score_x"].value_counts().reset_index())
+        fig = px.bar(score_df, x = "score_x", y = "count", title = "Répartition des scores")
+        g1.plotly_chart(fig, width = "stretch")
+
+        # Graphique distribution décisions
+        decision_df = (df_logs["decision_x"].value_counts().reset_index())
+        fig = px.bar(decision_df, x = "decision_x", y = "count", title = "Répartition des décisions")
+        g2.plotly_chart(fig, width = "stretch")
+
+    with st.container():
+        h1, h2, h3 = st.columns([1,1,1])
+
+        # Latence dans le temps
+        fig = px.line(df_logs, x="timestamp", y="latency_ms", title = "Distribution de la latence dans le temps(métier)")
+        h1.plotly_chart(fig, width = "stretch")
+
+        # CPU dans le temps
+        fig = px.line(df_logs, x="timestamp", y="cpu_percent", title = "Distribution du CPU dans le temps")
+        h2.plotly_chart(fig, width = "stretch")
+
+        # RAM dans le temps
+        fig = px.line(df_logs, x="timestamp", y="ram_percent", title = "Distribution de la RAM dans le temps")
+        h3.plotly_chart(fig, width = "stretch")
 
     # Graphique distribution colonnes en dérive
     drift_graph = pd.DataFrame({
@@ -100,7 +127,7 @@ with tab1:
             - drift_res["number_of_drifted_columns"]]})
 
     fig = px.bar(drift_graph, x = "Etat", y = "Nombre", title = "Répartition des colonnes en dérive")
-    st.plotly_chart(fig, use_container_width = True)
+    st.plotly_chart(fig, width = "stretch")
 
 
     # Liste des colonnes en drift
@@ -124,13 +151,7 @@ with tab2:
         if m["metric"] != "ColumnSummaryMetric":
             continue
         
-        result = m['result']
-
-        # summary_dict[m[result]["column_name"]] = m[result]
-        # summary_dict[result["column_name"]] = {
-        #     "missing": result["current_characteristics"]["missing"],
-        #     "missing_pct": result["current_characteristics"]["missing_percentage"]}
-        
+        result = m['result']        
         summary_dict[result["column_name"]] = {
         "missing": result["current_characteristics"]["missing"],
         "missing_pct": result["current_characteristics"]["missing_percentage"],
@@ -160,7 +181,7 @@ with tab2:
             "Nombre de valeurs uniques": summary_dict[col]["unique"]})
         
     df_drift = pd.DataFrame(drift_rows)
-    st.dataframe(df_drift.sort_values("Distance drift", ascending = False),  use_container_width = True)
+    st.dataframe(df_drift.sort_values("Distance drift", ascending = False),  width = "stretch")
     
     selected_col = st.selectbox("Choisir une colonne", df_drift["Colonne"], key = "drift_column")
 
@@ -171,14 +192,28 @@ with tab2:
     x_cur = metric["result"]["current"]["small_distribution"]["x"]
     y_cur = metric["result"]["current"]["small_distribution"]["y"]
 
-    st.write(f"Distribution de {selected_col}")  
-    fig = go.Figure()
-    fig.add_bar(x = x_ref, y = y_ref, name = "Référence")
-    fig.add_bar(x = x_cur, y = y_cur, name = "Production")
-    fig.update_layout(barmode="group", title = f"Distribution - {selected_col}", xaxis_title = "Valeurs", yaxis_title = "Densité", legend_title = "")
+    summary_metric = next(m for m in drift_data["metrics"] if (m["metric"] == "ColumnSummaryMetric" and m["result"]["column_name"] == selected_col))
+    missing_ref = summary_metric["result"]["reference_characteristics"]["missing"]
+    missing_cur = summary_metric["result"]["current_characteristics"]["missing"]
 
-    st.plotly_chart(fig, use_container_width = True)
+    with st.container():
+        st.write(f"Analyse détaillée: {selected_col}")  
+        i1, i2 = st.columns([1,1])    
 
+        # Distribution des données
+        fig = go.Figure()
+        fig.add_bar(x = x_ref, y = y_ref, name = "Référence")
+        fig.add_bar(x = x_cur, y = y_cur, name = "Production")
+        fig.update_layout(barmode = "group", title = f"Distribution - {selected_col}", xaxis_title = "Valeurs", yaxis_title = "Densité", legend_title = "")
+        i1.plotly_chart(fig, width = "stretch")
+
+        # Distribution valeurs manquantes
+        fig_missing = go.Figure()
+        fig_missing.add_bar(x = ["Référence"], y = [missing_ref], name = "Référence")
+        fig_missing.add_bar(x = ["Production"], y = [missing_cur], name = "Production")
+        fig_missing.update_layout(barmode="group", title=f"Valeurs manquantes - {selected_col}", yaxis_title = "Nombre de valeurs manquantes")
+
+        i2.plotly_chart(fig_missing, width = "stretch")
 
 # ONGLET 3 — Résumé par colonne (finalement faire plutôt un tableau?)
 with tab3:
@@ -209,11 +244,11 @@ with tab3:
                     ref.items(),
                     columns=["Métrique", "Valeur"]
                 ),
-                use_container_width = True)
+                width = True)
 
         with col2:
             st.markdown("### Production")
-            st.dataframe(pd.DataFrame(cur.items(), columns=["Métrique", "Valeur"]), use_container_width = True)
+            st.dataframe(pd.DataFrame(cur.items(), columns=["Métrique", "Valeur"]), width = True)
 
         # comparaison synthétique
         compare_df = pd.DataFrame({
@@ -255,7 +290,7 @@ with tab3:
             ]})
 
         st.markdown("### Comparaison directe")
-        st.dataframe(compare_df, use_container_width = True)
+        st.dataframe(compare_df, width = True)
 
 # ONGLET 4 — Logs bruts
 with tab4:
@@ -266,4 +301,4 @@ with tab4:
     col = st.selectbox("Visualiser une colonne :", df_logs.columns)
 
     fig = px.histogram(df_logs, x=col, nbins=30, title=f"Distribution de {col}")
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width=True)

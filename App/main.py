@@ -15,6 +15,7 @@ from logging.handlers import RotatingFileHandler
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi.openapi.utils import get_openapi
 import psutil
+from typing import List
 
 app = FastAPI()
 @app.get("/")
@@ -160,6 +161,8 @@ def predict(features: ClientFeatures, request: Request):
             raise HTTPException(
                 status_code=422,
                 detail="Revenu invalide")
+    
+    infer_start = time.perf_counter()
 
     # Conversion en DataFrame
     df = pd.DataFrame([data])
@@ -177,10 +180,9 @@ def predict(features: ClientFeatures, request: Request):
     # Prédiction MLflow
     score = pipe.predict_proba(df)[0][1]
     decision = "ACCORDÉ" if score < threshold else "REFUSÉ"
+    infer_time_ms = (time.perf_counter() - infer_start) * 1000
     X_monitoring = pipe[:-1].transform(df)
     X_monitoring = pd.DataFrame(X_monitoring,columns=pipe[:-1].get_feature_names_out())
-    # df_transformed = pipe[:-1].transform(df)
-    # df_transformed.to_dict()
 
     result =  {
         "score": float(score),
@@ -191,6 +193,7 @@ def predict(features: ClientFeatures, request: Request):
     log_entry = {
         "request_id": request_id,
         "timestamp": time.time(),
+        "inference_ms": infer_time_ms,
         "path": "/predict",
         "inputs": X_monitoring.iloc[0].to_dict(),
         "score": result["score"],
@@ -204,6 +207,52 @@ def predict(features: ClientFeatures, request: Request):
     logger.info(json.dumps(log_entry))
 
     return result
+
+@app.post("/predict_batch")
+def predict_batch(clients: List[dict], request: Request):
+    request_id = request.state.request_id
+
+    # data = [c.dict() for c in clients]
+    df = pd.DataFrame(clients)
+    df = df.rename(columns=COLUMN_MAPPING)
+
+    missing = set(pipe.feature_names_in_) - set(df.columns)
+    if missing:
+        raise HTTPException(
+            status_code=422,
+            detail=f"Colonnes manquantes après remapping : {missing}")
+
+    infer_start = time.perf_counter()
+    scores = pipe.predict_proba(df)[:, 1]
+    infer_time_ms = (time.perf_counter() - infer_start) * 1000
+
+    decision = ["ACCORDÉ" if s < threshold else "REFUSÉ" for s in scores]
+    X_monitoring = pipe[:-1].transform(df)
+    X_monitoring = pd.DataFrame(X_monitoring,columns=pipe[:-1].get_feature_names_out())
+    
+    result =  [{
+        "score": float(s),
+        "decision": d,
+        "threshold": float(threshold)}
+        for s, d in zip(scores, decision)]
+    
+    # Log métier
+    log_entry = {
+        "request_id": request_id,
+        "timestamp": time.time(),
+        "inference_ms": infer_time_ms,
+        "path": "/predict_batch",
+        "batch_size": len(df),
+        "inputs": X_monitoring.iloc[0].to_dict(),
+        "cpu_percent": psutil.cpu_percent(),
+        "ram_percent": psutil.virtual_memory().percent,
+        "system_load": psutil.getloadavg()[0],
+        "num_threads": psutil.Process().num_threads()}
+    
+    logger.info(json.dumps(log_entry))
+
+    return {"results": result, "inference_ms": infer_time_ms}
+
 
 # Exemple dynamique dans Swagger (/docs)
 # Charger dataset une seule fois

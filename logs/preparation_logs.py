@@ -4,6 +4,7 @@ from pathlib import Path
 
 log_file = Path("logs/predictions_log.jsonl")
 output_parquet = Path("logs/predictions_log.parquet")
+output_parquet_batch = Path("logs/predictions_log_batch.parquet")
 
 def load_jsonl(path): # fonction qui va lire le fichier jsonl ligne par ligne et retourner une liste de dictionnaires
     rows = []
@@ -48,6 +49,12 @@ def prepare_logs(): # si aucun fichier trouvé renvoyer un message
     # Ajout du request_id
     df_final["request_id"] = df_model["request_id"].values
 
+    # Ajout de l'inférence
+    df_final["inference_ms"] = df_model["inference_ms"].values
+
+    # Ajout de la taille du batch
+    df_final["batch_size"] = df_model["batch_size"].values
+
     # Ajout de la latence (join avec df_ops)
     df_ops_clean = df_ops.drop(columns=["inputs"], errors="ignore")
   
@@ -56,6 +63,16 @@ def prepare_logs(): # si aucun fichier trouvé renvoyer un message
     
     df_final.to_parquet(output_parquet, index=False)
     print(f"Fichier généré : {output_parquet}")
+
+    
+    df_batch_model = df[(df["path"] == "/predict_batch") & (df["inference_ms"].notna())].copy()
+    df_batch_ops = df[(df["path"] == "/predict_batch") & (df["latency_ms"].notna())].copy()
+
+    df_batch_final_batch = df_batch_model.merge(df_batch_ops, on = "request_id", suffixes=("_model", "_ops"))
+    df_batch_final_batch = df_batch_final_batch[["timestamp_model", "request_id", "latency_ms_ops", "inference_ms_model", "batch_size_model", "cpu_percent_ops", "ram_percent_ops", 
+                                                 "system_load_ops", "num_threads_ops"]]
+    df_batch_final_batch.to_parquet(output_parquet_batch, index=False)
+    print(f"Fichier généré (batch) : {output_parquet_batch}")
 
 if __name__ == "__main__":
     prepare_logs()

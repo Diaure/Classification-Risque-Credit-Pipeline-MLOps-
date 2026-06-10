@@ -16,11 +16,23 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi.openapi.utils import get_openapi
 import psutil
 from typing import List
+import os
 
 app = FastAPI()
 @app.get("/")
 def root():
     return {"status": "ok"}
+
+LOG_DIR = "/code/logs"
+LOG_FILE = "/code/logs/predictions_log.jsonl"
+
+# Création du dossier logs dans le conteneur Hugging Face
+os.makedirs(LOG_DIR, exist_ok=True)
+
+# Création du fichier vide s'il n'existe pas
+if not os.path.exists(LOG_FILE):
+    with open(LOG_FILE, "w") as f:
+        pass
 
 logger = logging.getLogger("prediction_logger") # objet qui va enregistrer tous les logs d'informations, warning, erreurs mais de debug
 logger.setLevel(logging.INFO) # les informations standard de fonctionnement d'API(latence, statut, inputs, outputs, erreurs, etc) : INFO(niveau normal de fonctionnement)
@@ -252,6 +264,12 @@ def predict_batch(clients: List[dict], request: Request):
     logger.info(json.dumps(log_entry))
 
     return {"results": result, "inference_ms": infer_time_ms}
+
+# Affichage du fichier en live
+@app.get("/logs")
+def read_logs():
+    with open("/code/logs/predictions_log.jsonl") as f:
+        return f.read().splitlines()
 
 
 # Exemple dynamique dans Swagger (/docs)

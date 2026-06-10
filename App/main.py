@@ -22,9 +22,15 @@ app = FastAPI()
 @app.get("/")
 def root():
     return {"status": "ok"}
+# Détection Hugging Face
+RUNNING_IN_HF = "SPACE_ID" in os.environ
 
-LOG_DIR = "/code/logs"
-LOG_FILE = "/code/logs/predictions_log.jsonl"
+if RUNNING_IN_HF:
+    LOG_DIR = "/code/logs"
+else:
+    LOG_DIR = "logs"
+
+LOG_FILE = os.path.join(LOG_DIR, "predictions_log.jsonl")
 
 # Création du dossier logs dans le conteneur Hugging Face
 os.makedirs(LOG_DIR, exist_ok=True)

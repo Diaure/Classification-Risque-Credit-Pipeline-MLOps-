@@ -28,7 +28,7 @@ jobs:
         run: echo "PYTHONPATH=$PWD" >> $GITHUB_ENV
         
       - name: Run tests
-        run: poetry run pytest --ignore=Monitoring/test_drift.py --ignore=test_api_unique.py
+        run: poetry run pytest --ignore=Monitoring/test_drift.py --ignore=test_api_unique.py --ignore=send_batch_request.py
 
   deploy:
     needs: tests

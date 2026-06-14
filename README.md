@@ -221,3 +221,103 @@ Cette forte proportion de refus est cohérente avec:
 Ce projet met en œuvre une approche CI/CD complète, séparant:
 - l’intégration continue (**CI**): garantir la qualité du code
 - le déploiement continu (**CD**): rendre l’API accessible publiquement
+
+## Optimisation du modèle & API (MLOps)
+Cette dernière partie du projet vise à assurer la **robustesse**, la **scalabilité** et la **fiabilité** du modèle en production.  
+Elle repose sur trois piliers :
+
+- **Collecte & stockage des données de production**
+- **Monitoring du drift & des métriques système**
+- **Optimisation du pipeline de prédiction (profiling & batch)**
+
+### 1. Collecte & stockage des données de production
+
+Chaque appel à l’API génère un log structuré contenant:
+- les données d’entrée du client,
+- le score prédit,
+- la décision (accord/refus),
+- la latence totale,
+- la latence d’inférence,
+- l’état CPU/RAM au moment de la requête.
+
+Ces logs sont écrits en **JSON Lines** (`predictions_logs.jsonl`) pour permettre:
+- un append efficace,
+- une lecture ligne par ligne,
+- une compatibilité avec les outils Big Data.
+
+Exemple d’une ligne de log:
+```json
+{
+  "timestamp": "...",
+  "latency_ms": 104.2,
+  "inference_ms": 36.7,
+  "cpu_percent": 24.0,
+  "ram_percent": 74.2,
+  "prediction": 0.87,
+  "decision": "refus"
+}
+````
+Pour faciliter l’analyse, les logs sont ensuite convertis en Parquet, un format colonne‑orienté plus compact, plus rapide à charger, & idéal pour les analyses statistiques.
+
+### 2. Monitoring du drift & des métriques système
+
+Les données de production sont comparées aux données de référence via Evidently AI.
+
+- **Harmonisation préalable**
+
+Avant toute comparaison, les colonnes sont alignées (mêmes noms, mêmes types), nettoyées, synchronisées entre référence et production.
+
+- **Résultats du drift global (dataset complet)**
+    - **Colonnes analysées: 278**
+    - **Colonnes en dérive: 79**
+    - **Taux de dérive: 28.4 %**
+
+Ce taux s’explique par des changements de distribution sur les montants, des catégories rares apparaissant en production, des comportements de paiement différents.
+
+- **Résultats sur l’échantillon (500 lignes)**
+    - **Colonnes analysées: 275**
+    - **Colonnes en dérive: 18**
+    - **Taux de dérive: 6.5 %**
+
+Cette différence est normale: un petit échantillon lisse les distributions et réduit la puissance statistique des tests.
+
+- **Dashboard Streamlit**
+````python
+streamlit run Monitoring/dashboard.py
+````
+Un dashboard interactif permet de visualiser:
+- le drift par colonne,
+- les distributions ref vs prod,
+- les métriques système (CPU, RAM, latence),
+- les anomalies de production,
+- l'mpact de l'optimisation.
+
+Ce dashboard constitue un outil essentiel pour le monitoring continu.
+
+### 3. Optimisation du pipeline de prédiction
+L’objectif est d’identifier les goulots d’étranglement du pipeline et d’optimiser la latence de l’API.
+
+- **Profiling du pipeline (dataset complet)**
+Le profiling montre que:
+![Profiling full data](https://raw.githubusercontent.com/Diaure/Classification-Risque-Credit-Pipeline-MLOps-/master/Images/profiling_full_dataset.png)
+
+**Le modèle est très rapide. Le preprocessing est le vrai goulot d’étranglement.**
+
+- **Profiling sur échantillon (500 lignes)**
+![Profiling sample](https://raw.githubusercontent.com/Diaure/Classification-Risque-Credit-Pipeline-MLOps-/master/Images/profiling_sample.png)
+
+Le comportement reste identique, mais les temps absolus chutent fortement.
+
+- **Appels unitaires vs batch**
+![unitaires vs batch](https://raw.githubusercontent.com/Diaure/Classification-Risque-Credit-Pipeline-MLOps-/master/Images/units_vs_batch.png)
+
+Le batch est 73× plus rapide que l’unitaire.
+
+Le preprocessing est vectorisé : il ne s’exécute qu’une seule fois en batch.
+
+Au vu des résultats:
+- optimiser le modèle n’aurait apporté qu’un gain marginal (2–3 ms),
+- optimiser le preprocessing permet de gagner plusieurs secondes en unitaire,
+- le batch permet de réduire la latence d’un facteur ×70.
+
+**Décision: optimiser le preprocessing et le mode d’appel, pas le modèle.**

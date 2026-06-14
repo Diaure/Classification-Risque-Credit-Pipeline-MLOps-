@@ -12,10 +12,15 @@ st.set_page_config(page_title="Monitoring Drift", layout="wide")
 with open("Monitoring/drift_report.json", "r", encoding="utf-8") as f:
     drift_data = json.load(f)
 
-# Tests pour vérifier la structure du json drift
+# # Tests pour vérifier la structure du json drift
 # for m in drift_data["metrics"]:
 #     if m["metric"] == "ColumnSummaryMetric":
 #         st.json(m)
+#         break
+
+# for m in drift_data["metrics"]:
+#     if m["metric"] == "ColumnSummaryMetric":
+#         st.write(m)
 #         break
 
 # for m in drift_data["metrics"]:
@@ -50,7 +55,7 @@ df_logs_opti["timestamp_model"] = pd.to_datetime(df_logs_opti["timestamp_model"]
 st.title("📊 Monitoring du Drift — Dashboard MLOps")
 
 # ONGLET 1 — Vue d’ensemble
-tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["VUE D'ENSEMBLE", "DERIVE PAR COLONNE", "RESUME PAR COLONNE", "LOGS BRUTS", "IMPACT OPTIMISATION", "COMPARAISON UNITAIRE vs BATCH"])
+tab1, tab2, tab3, tab4, tab5 = st.tabs(["VUE D'ENSEMBLE", "DERIVE PAR COLONNE", "LOGS BRUTS", "IMPACT OPTIMISATION", "COMPARAISON UNITAIRE vs BATCH"])
 
 with tab1:
     # Colonnes en dérive - Résultat global
@@ -162,8 +167,6 @@ with tab2:
         "missing_pct": result["current_characteristics"]["missing_percentage"],
         "unique": result["current_characteristics"]["unique"]}
 
-    # print(list(summary_dict.keys())[:5])
-
     drift_rows = []
     for m in drift_data["metrics"]:
         if m["metric"] != "ColumnDriftMetric":
@@ -186,10 +189,13 @@ with tab2:
             "Nombre de valeurs uniques": summary_dict[col]["unique"]})
         
     df_drift = pd.DataFrame(drift_rows)
-    st.dataframe(df_drift.sort_values("Distance drift", ascending = False),  width = "stretch")
+    df_drift_filtered = (df_drift[df_drift["Drift détecté"] == True].drop_duplicates(subset=["Colonne"])) # uniquement les colonnes en dérive pour voir le taux de dérive par colonne
+    # st.dataframe(df_drift_filtered.sort_values("Distance drift", ascending = False),  width = "stretch")
     
-    selected_col = st.selectbox("Choisir une colonne", df_drift["Colonne"], key = "drift_column")
+    selected_col = st.selectbox("Choisir une colonne", df_drift_filtered["Colonne"], key = "drift_column")
 
+    col_stats = df_drift_filtered[df_drift_filtered["Colonne"] == selected_col].iloc[0]
+    
     metric = next(m for m in drift_data["metrics"]if (m["metric"] == "ColumnDriftMetric" and m["result"]["column_name"] == selected_col))
     x_ref = metric["result"]["reference"]["small_distribution"]["x"]
     y_ref = metric["result"]["reference"]["small_distribution"]["y"]
@@ -203,6 +209,14 @@ with tab2:
 
     with st.container():
         st.write(f"Analyse détaillée: {selected_col}")  
+
+        st.markdown(f"""
+    - **Distance drift** : `{col_stats['Distance drift']:.4f}`
+    - **Dérive (%)** : `{col_stats['Dérive(%)']} %`
+    - **Seuil (%)** : `{col_stats['Seuil(%)']} %`
+    - **Drift détecté** : `{"Oui" if col_stats['Drift détecté'] else "Non"}`
+    """)
+        
         d1, d2 = st.columns([1,1])    
 
         # Distribution des données
@@ -221,78 +235,52 @@ with tab2:
         d2.plotly_chart(fig_missing, width = "stretch")
 
 # ONGLET 3 — Résumé par colonne (finalement faire plutôt un tableau?)
-with tab3:
-    st.header("📘 Résumé statistique par colonne")
+# with tab3:
+#     st.header("📘 Résumé statistique par colonne")
 
-    summaries = {}
-    for m in drift_data["metrics"]:
-        if m["metric"] != "ColumnSummaryMetric":
-            continue
+#     summaries = {}
+#     for m in drift_data["metrics"]:
+#         if m["metric"] != "ColumnSummaryMetric": 
+#             continue
+#         result2 = m['result']
 
-        result2 = m['result']
-        summaries[result2["column_name"]] = result2
+#         if ("column_name" not in result2 or result2["column_name"] is None or "reference_characteristics" not in result2 or "current_characteristics" not in result2):
+#                 continue
+#         summaries[result2["column_name"]] = result2
 
-        col_selectione = st.selectbox("Choisir une colonne", sorted(summaries.keys()))
-        summary = summaries[col_selectione]
+#     options = sorted(summaries.keys())
 
-        ref = summary["reference_characteristics"]
-        cur = summary["current_characteristics"]
+#     col_selectione = st.selectbox("Choisir une colonne", options, index=0)
+#     # col_selectione = st.selectbox("Choisir une colonne", sorted(summaries.keys()), key="summary_column")
 
-        # col = result2["column_name"]
-        st.subheader(f"🔹 {col_selectione}")
-        col1, col2 = st.columns(2)
+#     summary = summaries[col_selectione]
+#     ref = summary["reference_characteristics"]
+#     cur = summary["current_characteristics"]
 
-        with col1:
-            st.markdown("### Référence")
-            st.dataframe(pd.DataFrame(ref.items(), columns=["Métrique", "Valeur"]), width = True)
+#     st.subheader(f"🔹 {col_selectione}")
+#     col1, col2 = st.columns(2)
 
-        with col2:
-            st.markdown("### Production")
-            st.dataframe(pd.DataFrame(cur.items(), columns=["Métrique", "Valeur"]), width = True)
+#     with col1:
+#         st.markdown("### Référence")
+#         st.dataframe(pd.DataFrame(ref.items(), columns=["Métrique", "Valeur"]), width = True)
 
-        # comparaison synthétique
-        compare_df = pd.DataFrame({
-            "Métrique": [
-                "count",
-                "missing",
-                "mean",
-                "std",
-                "min",
-                "p25",
-                "p50",
-                "p75",
-                "max",
-                "unique"],
+#     with col2:
+#         st.markdown("### Production")
+#         st.dataframe(pd.DataFrame(cur.items(), columns=["Métrique", "Valeur"]), width = True)
 
-            "Référence": [
-                ref.get("count"),
-                ref.get("missing"),
-                ref.get("mean"),
-                ref.get("std"),
-                ref.get("min"),
-                ref.get("p25"),
-                ref.get("p50"),
-                ref.get("p75"),
-                ref.get("max"),
-                ref.get("unique")],
+#     # comparaison synthétique
+#     compare_df = pd.DataFrame({
+#             "Métrique": ["count", "missing", "mean", "std", "min", "p25", "p50", "p75", "max", "unique"],
+#             "Référence": [ref.get("count"), ref.get("missing"), ref.get("mean"), ref.get("std"), ref.get("min"), ref.get("p25"), 
+#                           ref.get("p50"), ref.get("p75"), ref.get("max"), ref.get("unique")],
+#             "Production": [cur.get("count"), cur.get("missing"), cur.get("mean"), cur.get("std"), cur.get("min"), cur.get("p25"), 
+#                            cur.get("p50"), cur.get("p75"), cur.get("max"), cur.get("unique")]})
 
-            "Production": [
-                cur.get("count"),
-                cur.get("missing"),
-                cur.get("mean"),
-                cur.get("std"),
-                cur.get("min"),
-                cur.get("p25"),
-                cur.get("p50"),
-                cur.get("p75"),
-                cur.get("max"),
-                cur.get("unique")]})
-
-        st.markdown("### Comparaison directe")
-        st.dataframe(compare_df, width = True)
+#     st.markdown("### Comparaison directe")
+#     st.dataframe(compare_df, width = True)
 
 # ONGLET 4 — Logs bruts
-with tab4:
+with tab3:
     st.header("📄 Logs bruts (production)")
 
     st.dataframe(df_logs.head(200))
@@ -300,10 +288,10 @@ with tab4:
     col = st.selectbox("Visualiser une colonne :", df_logs.columns)
 
     fig = px.histogram(df_logs, x=col, nbins=30, title=f"Distribution de {col}")
-    st.plotly_chart(fig, width=True)
+    st.plotly_chart(fig, width="stretch")
 
 # ONGLET 5 - KPI API après optimisation du processing
-with tab5:
+with tab4:
     # KPI API
     with st.container():
         st.markdown("""<p style='font-size: 22px; font-style: italic;'>Performance API (Batch)</p>""", unsafe_allow_html=True)
@@ -340,7 +328,7 @@ with tab5:
     st.plotly_chart(fig, use_container_width=True)
 
 # ONGLET 6 - Compaaison des kpis avant et après optimisation
-with tab6:
+with tab5:
     if df_logs.empty or df_logs_opti.empty:
         st.warning("Exécute au moins une requête unitaire et un batch pour afficher la comparaison.")
     else:
@@ -370,7 +358,7 @@ with tab6:
         df_batch["threads"] = df_batch["num_threads_ops"]
 
         # KPI
-        st.subheader("⏱️ Performances par client")
+        st.subheader("Performances par client")
         p1, p2, p3 = st.columns([1,1,1])
 
         # st.markdown("""<p style='font-size: 22px; font-style: italic;'>Latence par client</p>""", unsafe_allow_html=True)
@@ -388,7 +376,7 @@ with tab6:
         st.markdown("<br>", unsafe_allow_html=True)
 
         # kpi CPU/RAM/LOAD/THREADS
-        st.subheader("🖥️ Charge système")
+        st.subheader("Charge système")
 
         s1, s2, s3, s4 = st.columns([1,1,1,1])
         s1.metric("CPU (%) unitaire", f"{df_unit['cpu'].mean():.1f}%")
@@ -404,7 +392,7 @@ with tab6:
         st.markdown("<hr>", unsafe_allow_html=True)
 
         # Graphiques comparatifs
-        st.subheader("📊 Visualisations comparatives")
+        st.subheader("Visualisations comparatives")
         
         c1, c2 = st.columns(2)
 

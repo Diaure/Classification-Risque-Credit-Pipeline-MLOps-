@@ -1,0 +1,154 @@
+GUIDE D’EXÉCUTION DU PIPELINE MLOps – HOME CREDIT API
+
+Lien github: https://github.com/Diaure/Classification-Risque-Credit-Pipeline-MLOps-
+
+Ce document explique dans quel ordre exécuter les scripts du repository
+pour:
+
+1. Générer les logs unitaires et batch
+2. Stocker les logs en JSONL puis en Parquet
+3. Produire les rapports Evidently (HTML + JSON)
+4. Lancer le dashboard Streamlit (drift + métriques système)
+5. Comprendre la structure des différents onglets du dashboard
+
+Chaque étape est indépendante et reproductible.
+
+-----------------------------------------------------------
+PRÉREQUIS
+
+Avant toute exécution:
+- Installer l’environnement Conda du projet
+- Lancer l’API FastAPI avec:  uvicorn App:app --reload
+- Vérifier que les fichiers suivants existent:
+    - data/app_test_small.joblib  (échantillon 500 lignes)
+    - Bestmodel/best_model.joblib (modèle final)
+    - Bestmodel/pipeline_complet.joblib (pipeline sklearn)
+    - Bestmodel/best_threshold.joblib (seuil optimal final)
+
+1) GÉNÉRER LES LOGS UNITAIRES
+
+Commande: python tests/test_api_unique.py
+
+Ce script:
+- Envoie 1 ligne à l’API (plusieurs lignes pour avoir plus de requêtes)
+- Récupère les métriques métier (prédiction) et opérationnels (ex: latence)
+- Stocke le résultat dans logs/predictions_logs.jsonl
+
+Sortie attendue:
+- 1 ou plusieurs nouvelles lignes ajoutées dans logs/predictions_logs.jsonl
+
+3) GÉNÉRER LES LOGS EN MODE BATCH
+
+Commande: python tests/send_batch_request.py
+
+Ce script:
+- Envoie 100 lignes à l’API en une seule requête
+- Récupère les 100 prédictions et métriques métier associées
+- Stocke les 100 lignes dans logs/predictions_logs.jsonl
+
+Sortie attendue:
+- 1 nouvelle ligne de requête ajoutée dans logs/predictions_logs.jsonl
+et contenant un dictionnaire des 100 lignes
+
+4) CONVERSION DES LOGS EN PARQUET
+
+Commande: python logs/preparation_logs.py
+Ce script:
+- Charge logs/predictions_logs.jsonl
+- Convertit en DataFrame selon les besoins prédéfinis
+- Sauvegarde en logs/predictions_logs.parquet(unitaires)
+	logs/predictions_logs_batch.parquetbatch
+
+5) CRÉATION DU RAPPORT EVIDENTLY (HTML + JSON)
+
+Commande: python Monitoring/analyse_drift.py
+
+Ce script:
+- Charge les données de référence
+- Charge les logs de production (parquet)
+- Harmonise les colonnes
+- Génère:
+    - drift_report.html
+    - drift_report.json
+
+Sortie attendue:
+- Monitoring/drift_report.html
+- Monitoring/drift_report.json
+
+6) LANCER LE DASHBOARD STREAMLIT
+
+Commande: streamlit run Monitoring/dashboard.py
+
+Ce dashboard contient 4 onglets:
+   A. VUE D'ENSEMBLE
+       - Résumé global du drift (DatasetDriftMetric)
+       - KPI API (latence moyenne, temps d’inférence, CPU, RAM, charge système, threads)
+       - KPI métier (score moyen, seuil moyen, décision majoritaire)
+       - Graphiques:
+         - Répartition des scores
+         - Répartition des décisions
+         - Latence / CPU / RAM dans le temps
+         - Répartition des colonnes en dérive
+   - Liste des colonnes en dérive (ColumnDriftMetric)
+
+   B. DERIVE PAR COLONNE
+       - Tableau des colonnes en dérive avec:
+         - type, distance de drift, seuil, test statistique
+         - nombre et taux de valeurs manquantes
+         - nombre de valeurs uniques
+       - Sélection d’une colonne
+       - Graphiques:
+         - Distribution ref vs prod (small_distribution Evidently)
+         - Comparaison des valeurs manquantes ref vs prod
+
+   C. LOGS BRUTS
+       - Aperçu des 200 premières lignes de logs de production
+       - Sélecteur de colonne
+       - Histogramme de la colonne sélectionnée
+
+   D. IMPACT OPTIMISATION (Batch)
+       - KPI API après optimisation (batch):
+         - latence moyenne
+         - temps d’inférence moyen
+         - CPU / RAM / charge système / threads
+       - Graphiques:
+         - Latence batch dans le temps
+         - CPU batch dans le temps
+         - RAM batch dans le temps
+         - Relation batch_size vs latence
+
+   E. COMPARAISON UNITAIRE vs BATCH
+       - Calcul par client:
+         - latence par client (unitaire vs batch)
+         - temps d’inférence par client (unitaire vs batch)
+       - KPI de gain:
+         - gain de latence
+         - gain d’inférence
+       - Charge système:
+         - CPU, RAM, load, threads (unitaire vs batch)
+       - Graphiques comparatifs (boxplots):
+         - latence par client : unitaire vs batch
+         - inférence par client : unitaire vs batch
+         - CPU, RAM, load, threads: unitaire vs batch
+
+Sortie attendue:
+- Dashboard interactif accessible dans le navigateur
+
+7) PROFILING DU PIPELINE
+
+Script:  Notebooks/drift_performance_analysis.ipynb
+
+Ce script:
+- Refais l'analyse du drift avec python
+- Exécute le profiling
+- Présente la stratégie d'optimisation choisie
+
+8) RÉSUMÉ DU FLUX COMPLET
+
+1. Lancer l’API FastAPI
+2. Exécuter test_api_unique.py
+3. Exécuter send_batch_request.py
+4. Convertir les logs <> Parquet
+5. Générer le drift Evidently
+6. Lancer le dashboard Streamlit
+7. Exécuter les analyses du drift et des performances via python (optionnel).

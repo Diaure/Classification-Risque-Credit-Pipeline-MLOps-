@@ -299,17 +299,17 @@ L’objectif est d’identifier les goulots d’étranglement du pipeline et d�
 
 - **Profiling du pipeline (dataset complet)**
 Le profiling montre que:
-![Profiling full data](https://raw.githubusercontent.com/Diaure/Classification-Risque-Credit-Pipeline-MLOps-/master/Images/profiling_full_dataset.png)
+![Profiling full data](Images/profiling_full_dataset.PNG)
 
 **Le modèle est très rapide. Le preprocessing est le vrai goulot d’étranglement.**
 
 - **Profiling sur échantillon (500 lignes)**
-![Profiling sample](https://raw.githubusercontent.com/Diaure/Classification-Risque-Credit-Pipeline-MLOps-/master/Images/profiling_sample.png)
+![Profiling sample](Images/profiling_sample.PNG)
 
 Le comportement reste identique, mais les temps absolus chutent fortement.
 
 - **Appels unitaires vs batch**
-![unitaires vs batch](https://raw.githubusercontent.com/Diaure/Classification-Risque-Credit-Pipeline-MLOps-/master/Images/units_vs_batch.png)
+![unitaires vs batch](Images/units_vs_batch.PNG)
 
 Le batch est 73× plus rapide que l’unitaire.
 

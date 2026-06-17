@@ -17,7 +17,14 @@ L’entreprise souhaite mettre en place un système automatisé de scoring créd
 - de classer automatiquement une demande en crédit accordé ou crédit refusé,
 - tout en garantissant transparence et industrialisation du cycle de vie du modèle.
 
-Ce projet s’inscrit dans une démarche MLOps complète, du tracking d’expérimentations jusqu’au serving du modèle.
+Au‑delà de la modélisation, la mission inclut une dimension **MLOps avancée**, indispensable pour un modèle déployé en production:
+- collecte et stockage des logs de prédiction,
+- monitoring continu du drift et des métriques système,
+- analyse des performances réelles du pipeline (latence, CPU, RAM),
+- identification et optimisation des goulots d’étranglement,
+- mise en place d’un dashboard complet pour suivre l’état du modèle dans le temps.
+
+Ce projet couvre donc l’ensemble du cycle de vie : **modélisation > déploiement > monitoring > optimisation**.
 
 ## Objectifs du projet
 
@@ -37,7 +44,16 @@ Autrement dit, il faudra:
     - Le déséquilibre de classes
     - Le coût asymétrique des erreurs (FN = 10 × FP)
 
-- Comparer plusieurs modèles via Cross-Validation et GridSearch.
+- Comparer plusieurs modèles via Cross-Validation et GridSearch <> Sélectionner le modèle minimisant le coùut métier
+
+- Déployer et surveiller (MLOps)
+    - Service du modèle via une API FastAPI (local, HuggingFace, Gradio)
+    - Collecte & stockage des logs de prédiction et métriques système
+    - Rapport Evidently pour l'analyse des dérives des données, des distributions entre les données de référence et de production
+    - Conception d'un dashboard Streamlit 
+    - Optimisation des performances: profiling du pipeline, identification des goulots d'étranglement, comparaison des performances
+
+L’objectif final est de garantir un modèle **performant**, **observable**, **scalable** et **maintenable** en production.
 
 ## Sources de données
 
@@ -299,16 +315,19 @@ L’objectif est d’identifier les goulots d’étranglement du pipeline et d�
 
 - **Profiling du pipeline (dataset complet)**
 Le profiling montre que:
+
 ![Profiling full data](Images/profiling_full_dataset.PNG)
 
 **Le modèle est très rapide. Le preprocessing est le vrai goulot d’étranglement.**
 
 - **Profiling sur échantillon (500 lignes)**
+
 ![Profiling sample](Images/profiling_sample.PNG)
 
 Le comportement reste identique, mais les temps absolus chutent fortement.
 
 - **Appels unitaires vs batch**
+
 ![unitaires vs batch](Images/units_vs_batch.PNG)
 
 Le batch est 73× plus rapide que l’unitaire.

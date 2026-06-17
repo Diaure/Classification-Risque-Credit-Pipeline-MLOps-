@@ -18,7 +18,7 @@ PRÉREQUIS
 
 Avant toute exécution:
 - Installer l’environnement Conda du projet
-- Lancer l’API FastAPI avec:  uvicorn App:app --reload
+- Lancer l’API FastAPI avec:  uvicorn App.main:app --reload
 - Vérifier que les fichiers suivants existent:
     - data/app_test_small.joblib  (échantillon 500 lignes)
     - Bestmodel/best_model.joblib (modèle final)

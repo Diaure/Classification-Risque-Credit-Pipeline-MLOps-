@@ -190,7 +190,7 @@ with tab2:
         
     df_drift = pd.DataFrame(drift_rows)
     df_drift_filtered = (df_drift[df_drift["Drift détecté"] == True].drop_duplicates(subset=["Colonne"])) # uniquement les colonnes en dérive pour voir le taux de dérive par colonne
-    # st.dataframe(df_drift_filtered.sort_values("Distance drift", ascending = False),  width = "stretch")
+    st.dataframe(df_drift_filtered.sort_values("Distance drift", ascending = False),  width = "stretch")
     
     selected_col = st.selectbox("Choisir une colonne", df_drift_filtered["Colonne"], key = "drift_column")
 
